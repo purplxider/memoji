@@ -11,7 +11,6 @@ import UIKit
 class MainViewController: UIViewController {
 
     @IBOutlet weak var backgroundImage: UIImageView!
-    @IBOutlet weak var titleImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +20,7 @@ class MainViewController: UIViewController {
         backgroundImage.isUserInteractionEnabled = true
         backgroundImage.addGestureRecognizer(tapGestureRecognizer)
         
-        titleImage.image = UIImage(named: "title.png")
-        backgroundImage.image = UIImage(named: "background.png")
+        backgroundImage.image = UIImage(named: "title.png")
         // Do any additional setup after loading the view.
     }
     

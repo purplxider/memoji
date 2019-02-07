@@ -15,6 +15,12 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 80.0
+        
+        let toolbar = UIToolbar()
+        let plus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil) // 수정
+        let favorite = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: nil) // 수정
+        toolbar.items = [plus, favorite]
+        toolbar.isHidden = false
                 
         tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
         tableView.backgroundColor = .clear
