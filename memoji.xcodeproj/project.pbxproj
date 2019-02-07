@@ -14,6 +14,9 @@
 		523E79C7220BB772003EA7C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523E79C5220BB772003EA7C7 /* LaunchScreen.storyboard */; };
 		523E79D2220BB772003EA7C7 /* memojiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79D1220BB772003EA7C7 /* memojiTests.swift */; };
 		523E79DD220BB772003EA7C7 /* memojiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79DC220BB772003EA7C7 /* memojiUITests.swift */; };
+		523E79EB220BBD8F003EA7C7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EA220BBD8F003EA7C7 /* MainViewController.swift */; };
+		523E79ED220BC3FE003EA7C7 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */; };
+		523E79EF220BD92F003EA7C7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EE220BD92F003EA7C7 /* GameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		523E79D8220BB772003EA7C7 /* memojiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = memojiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		523E79DC220BB772003EA7C7 /* memojiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = memojiUITests.swift; sourceTree = "<group>"; };
 		523E79DE220BB772003EA7C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		523E79EA220BBD8F003EA7C7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		523E79EE220BD92F003EA7C7 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,9 @@
 				523E79BC220BB770003EA7C7 /* AppDelegate.swift */,
 				523E79BE220BB770003EA7C7 /* ViewController.swift */,
 				523E79C0220BB770003EA7C7 /* Main.storyboard */,
+				523E79EE220BD92F003EA7C7 /* GameViewController.swift */,
+				523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */,
+				523E79EA220BBD8F003EA7C7 /* MainViewController.swift */,
 				523E79C3220BB772003EA7C7 /* Assets.xcassets */,
 				523E79C5220BB772003EA7C7 /* LaunchScreen.storyboard */,
 				523E79C8220BB772003EA7C7 /* Info.plist */,
@@ -256,8 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523E79EF220BD92F003EA7C7 /* GameViewController.swift in Sources */,
+				523E79EB220BBD8F003EA7C7 /* MainViewController.swift in Sources */,
 				523E79BF220BB770003EA7C7 /* ViewController.swift in Sources */,
 				523E79BD220BB770003EA7C7 /* AppDelegate.swift in Sources */,
+				523E79ED220BC3FE003EA7C7 /* CategoryTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
