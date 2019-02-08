@@ -29,8 +29,9 @@ class MainViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let categoryVC = storyboard.instantiateViewController(withIdentifier: "Category") as! CategoryTableViewController
         let navigationController = UINavigationController(rootViewController: categoryVC)
-        present(navigationController, animated: false, completion: nil)
-        }
+        navigationController.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        present(navigationController, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
