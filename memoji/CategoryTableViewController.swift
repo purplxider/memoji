@@ -15,12 +15,6 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 80.0
-        
-        let toolbar = UIToolbar()
-        let plus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil) // 수정
-        let favorite = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: nil) // 수정
-        toolbar.items = [plus, favorite]
-        toolbar.isHidden = false
                 
         tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
         tableView.backgroundColor = .clear
@@ -30,6 +24,18 @@ class CategoryTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        addToolbar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        
+        navigationController?.setToolbarHidden(true, animated: true)
     }
 
     // MARK: - Table view data source
@@ -55,6 +61,18 @@ class CategoryTableViewController: UITableViewController {
         cell.backgroundColor = .clear
         
         return cell
+    }
+    
+    func addToolbar() {
+        navigationController?.setToolbarHidden(false, animated: true)
+        let plus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil) // 수정
+        let favorite = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: nil) // 수정
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        var items = [UIBarButtonItem]()
+        items.append(plus)
+        items.append(space)
+        items.append(favorite)
+        self.toolbarItems = items
     }
 
     /*

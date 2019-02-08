@@ -17,6 +17,7 @@
 		523E79EB220BBD8F003EA7C7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EA220BBD8F003EA7C7 /* MainViewController.swift */; };
 		523E79ED220BC3FE003EA7C7 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */; };
 		523E79EF220BD92F003EA7C7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EE220BD92F003EA7C7 /* GameViewController.swift */; };
+		523E79F1220D7AD1003EA7C7 /* DataCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79F0220D7AD1003EA7C7 /* DataCenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		523E79EA220BBD8F003EA7C7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		523E79EE220BD92F003EA7C7 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		523E79F0220D7AD1003EA7C7 /* DataCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		523E79BB220BB770003EA7C7 /* memoji */ = {
 			isa = PBXGroup;
 			children = (
+				523E79F0220D7AD1003EA7C7 /* DataCenter.swift */,
 				523E79BC220BB770003EA7C7 /* AppDelegate.swift */,
 				523E79BE220BB770003EA7C7 /* ViewController.swift */,
 				523E79C0220BB770003EA7C7 /* Main.storyboard */,
@@ -265,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523E79F1220D7AD1003EA7C7 /* DataCenter.swift in Sources */,
 				523E79EF220BD92F003EA7C7 /* GameViewController.swift in Sources */,
 				523E79EB220BBD8F003EA7C7 /* MainViewController.swift in Sources */,
 				523E79BF220BB770003EA7C7 /* ViewController.swift in Sources */,
