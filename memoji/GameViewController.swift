@@ -16,14 +16,35 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundImage.frame = UIScreen.main.bounds
-        
         answerView.backgroundColor = UIColor(red: 208/255.0, green: 211/255.0, blue: 217/255.0, alpha: 1.0)
+        setUpToolBar()
         
         navigationItem.title = "#1" // 수정
         
         backgroundImage.image = UIImage(named: "background.png")
 
         // Do any additional setup after loading the view.
+    }
+    
+    func setUpToolBar() {
+        let clear = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: nil) // 수정
+        clear.tintColor = UIColor.darkGray
+        let hint = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil) // 수정
+        hint.tintColor = UIColor.darkGray
+        let share = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil) // 수정
+        share.tintColor = UIColor.darkGray
+        let favorite = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil) // 수정
+        favorite.tintColor = UIColor.darkGray
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        var items = [UIBarButtonItem]()
+        items.append(clear)
+        items.append(space)
+        items.append(hint)
+        items.append(space)
+        items.append(favorite)
+        items.append(space)
+        items.append(share)
+        gameToolBar.setItems(items, animated: true)
     }
 
     /*
