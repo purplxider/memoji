@@ -13,10 +13,10 @@ class Question:NSObject, NSCoding {
     
     let question: String
     let length: Int
-    let answer: [Character]
+    let answer: String
     var answerPool: [Character]
     
-    init(question:String, length:Int, answer:[Character], answerPool:[Character]) {
+    init(question:String, length:Int, answer:String, answerPool:[Character]) {
         self.question = question
         self.length = length
         self.answer = answer
@@ -33,7 +33,7 @@ class Question:NSObject, NSCoding {
     required init?(coder aDecoder: NSCoder) {
         self.question = aDecoder.decodeObject(forKey: "question") as! String
         self.length = aDecoder.decodeObject(forKey: "length") as! Int
-        self.answer = aDecoder.decodeObject(forKey: "answer") as! [Character]
+        self.answer = aDecoder.decodeObject(forKey: "answer") as! String
         self.answerPool = aDecoder.decodeObject(forKey: "answerPool") as! [Character]
     }
 }
