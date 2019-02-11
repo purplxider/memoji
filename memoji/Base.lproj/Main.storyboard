@@ -99,10 +99,15 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items/>
                             </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fN7-Wz-zcr">
+                                <rect key="frame" x="50" y="130" width="274" height="149"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="bottom" secondItem="zVO-1g-WM9" secondAttribute="bottom" id="RRr-vu-VCB"/>
+                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="centerX" secondItem="zeW-xh-nro" secondAttribute="centerX" id="Szk-6O-hIs"/>
+                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="top" secondItem="zVO-1g-WM9" secondAttribute="top" constant="60" id="ger-eh-r2C"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="trailing" secondItem="zVO-1g-WM9" secondAttribute="trailing" id="kWI-nx-NeL"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="leading" secondItem="zVO-1g-WM9" secondAttribute="leading" id="yaA-fM-39S"/>
                         </constraints>
@@ -112,6 +117,7 @@
                         <outlet property="answerView" destination="EJc-Oq-Bby" id="Kdd-ig-cDs"/>
                         <outlet property="backgroundImage" destination="1UO-Do-jVx" id="f13-Z3-AxC"/>
                         <outlet property="gameToolBar" destination="0eq-sA-bN0" id="b1Q-o0-zOb"/>
+                        <outlet property="memoImage" destination="fN7-Wz-zcr" id="GTf-C3-rzo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ND-Jl-Ufa" userLabel="First Responder" sceneMemberID="firstResponder"/>

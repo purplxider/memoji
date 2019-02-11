@@ -12,6 +12,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var answerView: UIView!
     @IBOutlet weak var gameToolBar: UIToolbar!
+    @IBOutlet weak var memoImage: UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,7 @@ class GameViewController: UIViewController {
         navigationItem.title = "#1" // 수정
         
         backgroundImage.image = UIImage(named: "background.png")
+        memoImage.image = UIImage(named: "memo.png")
 
         // Do any additional setup after loading the view.
     }
