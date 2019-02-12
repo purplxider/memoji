@@ -19,6 +19,7 @@ class GameViewController: UIViewController {
     var answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
     var answerLength = 6 // 수정
     var questionNumber = 1 // 수정
+    var hiddenButtonTag = [Int:Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ class GameViewController: UIViewController {
     }
     
     func setupToolBar() {
-        let clear = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: nil) // 수정
+        let clear = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil) // 수정
         clear.tintColor = UIColor.darkGray
         let hint = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil) // 수정
         hint.tintColor = UIColor.darkGray
@@ -63,6 +64,30 @@ class GameViewController: UIViewController {
         gameToolBar.setItems(items, animated: true)
     }
     
+    func setupAnswerBlock() { // 수정
+        var button = UIButton()
+        var x = 16
+        let y = 323
+        var count = 0
+        
+        for _ in 1...answerLength {
+            button = UIButton(frame: CGRect(x: x, y: y, width: 44, height: 44))
+            button.backgroundColor = UIColor(red: 196/255.0, green: 196/255.0, blue: 196/255.0, alpha: 1.0)
+            button.tag = count + 100
+            button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+            button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+            button.layer.shadowOpacity = 1.0
+            button.layer.shadowRadius = 0.7
+            button.layer.masksToBounds = false
+            button.layer.cornerRadius = 4.0
+            button.showsTouchWhenHighlighted = true
+            button.addTarget(self, action: #selector(deselectAnswer(_:)), for: .touchUpInside)
+            self.view.addSubview(button)
+            x = x + 60
+            count = count + 1
+        }
+    }
+    
     func setupAnswerPool() {
         var button = UIButton()
         var x = 21
@@ -75,13 +100,15 @@ class GameViewController: UIViewController {
                 button.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                 button.setTitle(answerPool[count], for: .normal)
                 button.setTitleColor(UIColor.black, for: .normal)
-                button.tag = count
+                button.tag = count + 200
                 button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
                 button.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
                 button.layer.shadowOpacity = 1.0
                 button.layer.shadowRadius = 0.0
                 button.layer.masksToBounds = false
                 button.layer.cornerRadius = 4.0
+                button.showsTouchWhenHighlighted = true
+                button.addTarget(self, action: #selector(selectAnswer(_:)), for: .touchUpInside)
                 self.answerView.addSubview(button)
                 x = x + 50
                 count = count + 1
@@ -91,30 +118,38 @@ class GameViewController: UIViewController {
         }
     }
     
-    func setupAnswerBlock() { // 수정
-        var button = UIButton()
-        var x = 16
-        let y = 323
-        var count = 0
-        
-        for _ in 1...answerLength {
-            button = UIButton(frame: CGRect(x: x, y: y, width: 44, height: 44))
-            button.backgroundColor = UIColor(red: 196/255.0, green: 196/255.0, blue: 196/255.0, alpha: 1.0)
-            button.tag = count
-            button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-            button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-            button.layer.shadowOpacity = 1.0
-            button.layer.shadowRadius = 0.7
-            button.layer.masksToBounds = false
-            button.layer.cornerRadius = 4.0
-            self.view.addSubview(button)
-            x = x + 60
-            count = count + 1
+    func setupQuestion() {
+        questionLabel.text = "🔁🤝🌏"
+    }
+    
+    @objc func selectAnswer(_ poolButton: UIButton) {
+        for i in 100...(100+answerLength) {
+            if let answerButton = self.view.viewWithTag(i) as? UIButton {
+                if answerButton.titleLabel?.text == nil || answerButton.titleLabel?.text == " " {
+                    answerButton.setTitle(poolButton.titleLabel?.text, for: .normal)
+                    poolButton.isHidden = true
+                    hiddenButtonTag[answerButton.tag] = poolButton.tag
+                    print(hiddenButtonTag)
+                    break
+                }
+                continue
+            }
         }
     }
     
-    func setupQuestion() {
-        questionLabel.text = "🔁🤝🌏"
+    @objc func deselectAnswer(_ answerButton: UIButton) {
+        let hiddenButtonKeys = Array(hiddenButtonTag.keys)
+        if hiddenButtonKeys.contains(answerButton.tag) {
+            let key = answerButton.tag
+            if let poolButtonTag = hiddenButtonTag[key] {
+                if let poolButton = self.view.viewWithTag(poolButtonTag) as? UIButton {
+                    answerButton.setTitle(" ", for: .normal)
+                    poolButton.isHidden = false
+                    hiddenButtonTag.removeValue(forKey: key)
+                    print(hiddenButtonTag)
+                }
+            }
+        }
     }
 
     /*
