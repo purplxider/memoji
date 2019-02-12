@@ -18,6 +18,11 @@ class CategoryTableViewController: UITableViewController {
                 
         tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
         tableView.backgroundColor = .clear
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.clipsToBounds = true
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -26,16 +31,16 @@ class CategoryTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
-        addToolbar()
+        setupToolbar()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
         
-        navigationController?.setToolbarHidden(true, animated: true)
+        navigationController?.setToolbarHidden(true, animated: false)
     }
 
     // MARK: - Table view data source
@@ -63,8 +68,11 @@ class CategoryTableViewController: UITableViewController {
         return cell
     }
     
-    func addToolbar() {
+    func setupToolbar() {
         navigationController?.setToolbarHidden(false, animated: true)
+        navigationController?.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+        navigationController?.toolbar.clipsToBounds = true
+        navigationController?.toolbar.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
         let plus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil) // 수정
         let favorite = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: nil) // 수정
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)

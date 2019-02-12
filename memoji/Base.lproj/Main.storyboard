@@ -87,6 +87,24 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-sA-bN0">
+                                <rect key="frame" x="0.0" y="408" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items/>
+                            </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fN7-Wz-zcr">
+                                <rect key="frame" x="50.5" y="130" width="274" height="149"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="149" id="1Yq-Yk-Nfw"/>
+                                    <constraint firstAttribute="width" constant="274" id="1iY-4W-56G"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ggw-ba-0AZ">
+                                <rect key="frame" x="112.5" y="171" width="150.5" height="66"/>
+                                <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJc-Oq-Bby">
                                 <rect key="frame" x="0.0" y="452" width="375" height="215"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -94,22 +112,17 @@
                                     <constraint firstAttribute="width" secondItem="EJc-Oq-Bby" secondAttribute="height" multiplier="75:43" id="oou-pK-Sel"/>
                                 </constraints>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-sA-bN0">
-                                <rect key="frame" x="0.0" y="408" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items/>
-                            </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fN7-Wz-zcr">
-                                <rect key="frame" x="50" y="130" width="274" height="149"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Ggw-ba-0AZ" firstAttribute="centerX" secondItem="zeW-xh-nro" secondAttribute="centerX" id="81O-RA-QNz"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="bottom" secondItem="zVO-1g-WM9" secondAttribute="bottom" id="RRr-vu-VCB"/>
                             <constraint firstItem="fN7-Wz-zcr" firstAttribute="centerX" secondItem="zeW-xh-nro" secondAttribute="centerX" id="Szk-6O-hIs"/>
-                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="top" secondItem="zVO-1g-WM9" secondAttribute="top" constant="60" id="ger-eh-r2C"/>
+                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="top" secondItem="zVO-1g-WM9" secondAttribute="top" constant="66" id="TGm-fW-zzo"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="trailing" secondItem="zVO-1g-WM9" secondAttribute="trailing" id="kWI-nx-NeL"/>
+                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="centerY" secondItem="zeW-xh-nro" secondAttribute="centerY" constant="-129" id="rOr-ou-oyJ"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="leading" secondItem="zVO-1g-WM9" secondAttribute="leading" id="yaA-fM-39S"/>
+                            <constraint firstItem="Ggw-ba-0AZ" firstAttribute="centerY" secondItem="zeW-xh-nro" secondAttribute="centerY" constant="-129.5" id="ypk-rD-ITF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zVO-1g-WM9"/>
                     </view>
@@ -118,6 +131,7 @@
                         <outlet property="backgroundImage" destination="1UO-Do-jVx" id="f13-Z3-AxC"/>
                         <outlet property="gameToolBar" destination="0eq-sA-bN0" id="b1Q-o0-zOb"/>
                         <outlet property="memoImage" destination="fN7-Wz-zcr" id="GTf-C3-rzo"/>
+                        <outlet property="questionLabel" destination="Ggw-ba-0AZ" id="GUV-rJ-EAn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ND-Jl-Ufa" userLabel="First Responder" sceneMemberID="firstResponder"/>
