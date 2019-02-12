@@ -15,8 +15,10 @@ class GameViewController: UIViewController {
     @IBOutlet weak var memoImage: UIImageView!
     @IBOutlet weak var questionLabel: UILabel!
     
-    
+    var question = "🔁🤝🌏"
     var answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
+    var answer = ["다", "시", "만", "난", "세", "계"] //수정
+    var userAnswer = [String]()
     var answerLength = 6 // 수정
     var questionNumber = 1 // 수정
     var hiddenButtonTag = [Int:Int]()
@@ -119,7 +121,14 @@ class GameViewController: UIViewController {
     }
     
     func setupQuestion() {
-        questionLabel.text = "🔁🤝🌏"
+        questionLabel.text = question
+        print(question)
+    }
+    
+    func checkIfCorrect() {
+        if userAnswer == answer {
+            setupQuestion()
+        }
     }
     
     @objc func removeAll() {
@@ -147,6 +156,9 @@ class GameViewController: UIViewController {
                     answerButton.setTitle(poolButton.titleLabel?.text, for: .normal)
                     poolButton.isHidden = true
                     hiddenButtonTag[answerButton.tag] = poolButton.tag
+                    let text = poolButton.titleLabel?.text as! String
+                    userAnswer.insert(text, at: (answerButton.tag - 100))
+                    checkIfCorrect()
                     break
                 }
                 continue
