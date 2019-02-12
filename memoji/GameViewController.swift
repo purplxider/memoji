@@ -44,7 +44,7 @@ class GameViewController: UIViewController {
     }
     
     func setupToolBar() {
-        let clear = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil) // 수정
+        let clear = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(removeAll)) // 수정
         clear.tintColor = UIColor.darkGray
         let hint = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil) // 수정
         hint.tintColor = UIColor.darkGray
@@ -122,6 +122,24 @@ class GameViewController: UIViewController {
         questionLabel.text = "🔁🤝🌏"
     }
     
+    @objc func removeAll() {
+        for i in 100...(100+answerLength) {
+            if let answerButton = self.view.viewWithTag(i) as? UIButton {
+                if let poolButtonKey = hiddenButtonTag[answerButton.tag] {
+                    if let poolButton = self.view.viewWithTag(poolButtonKey) as? UIButton {
+                        if answerButton.titleLabel?.text != nil || answerButton.titleLabel?.text != " " {
+                            answerButton.setTitle(" ", for: .normal)
+                            poolButton.isHidden = false
+                            hiddenButtonTag.removeValue(forKey: answerButton.tag)
+                            print(hiddenButtonTag)
+                        }
+                        continue
+                    }
+                }
+            }
+        }
+    }
+    
     @objc func selectAnswer(_ poolButton: UIButton) {
         for i in 100...(100+answerLength) {
             if let answerButton = self.view.viewWithTag(i) as? UIButton {
@@ -129,7 +147,6 @@ class GameViewController: UIViewController {
                     answerButton.setTitle(poolButton.titleLabel?.text, for: .normal)
                     poolButton.isHidden = true
                     hiddenButtonTag[answerButton.tag] = poolButton.tag
-                    print(hiddenButtonTag)
                     break
                 }
                 continue
@@ -146,7 +163,6 @@ class GameViewController: UIViewController {
                     answerButton.setTitle(" ", for: .normal)
                     poolButton.isHidden = false
                     hiddenButtonTag.removeValue(forKey: key)
-                    print(hiddenButtonTag)
                 }
             }
         }
