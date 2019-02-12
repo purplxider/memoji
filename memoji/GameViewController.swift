@@ -17,22 +17,29 @@ class GameViewController: UIViewController {
     
     
     var answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
+    var answerLength = 6 // 수정
+    var questionNumber = 1 // 수정
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundImage.frame = UIScreen.main.bounds
-        answerView.backgroundColor = UIColor(red: 208/255.0, green: 211/255.0, blue: 217/255.0, alpha: 1.0)
+        
+        setupView()
         setupToolBar()
         setupAnswerPool()
         setupAnswerBlock()
         setupQuestion()
-        
-        navigationItem.title = "#1" // 수정
-        
+    }
+    
+    func setupView() {
+        backgroundImage.frame = UIScreen.main.bounds
+        answerView.backgroundColor = UIColor(red: 208/255.0, green: 211/255.0, blue: 217/255.0, alpha: 1.0)
         backgroundImage.image = UIImage(named: "background.png")
         memoImage.image = UIImage(named: "memo.png")
-
-        // Do any additional setup after loading the view.
+        navigationItem.title = "#\(questionNumber)" // 수정
+    }
+    
+    func nextQuestion() { // 수정
+        questionNumber = questionNumber + 1
     }
     
     func setupToolBar() {
@@ -84,13 +91,13 @@ class GameViewController: UIViewController {
         }
     }
     
-    func setupAnswerBlock() {
+    func setupAnswerBlock() { // 수정
         var button = UIButton()
         var x = 16
         let y = 323
         var count = 0
         
-        for _ in 0...5 {
+        for _ in 1...answerLength {
             button = UIButton(frame: CGRect(x: x, y: y, width: 44, height: 44))
             button.backgroundColor = UIColor(red: 196/255.0, green: 196/255.0, blue: 196/255.0, alpha: 1.0)
             button.tag = count
