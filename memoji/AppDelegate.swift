@@ -16,6 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if UserDefaults.standard.object(forKey: "money") == nil {
+            UserDefaults.standard.set(0, forKey: "money")
+        }
+        if UserDefaults.standard.object(forKey: "questionNumber") == nil {
+            UserDefaults.standard.set(1, forKey: "questionNumber")
+        }
+        
         return true
     }
 

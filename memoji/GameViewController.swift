@@ -16,12 +16,14 @@ class GameViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"], answerPool: ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"])
+    var money = UserDefaults.standard.integer(forKey: "money")
+    var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
+    let moneyButton = UIButton(type: .system)
     
     var emoji = String()
     var answerPool = [String]()
     var answer = [String]()
     var answerLength = Int()
-    var questionNumber = Int()
     var userAnswer = [String]()
     var hiddenButtonTag = [Int:Int]()
     
@@ -32,13 +34,19 @@ class GameViewController: UIViewController {
         answerPool = question.answerPool
         answer = question.answer
         answerLength = question.length
-        questionNumber = 1 // 수정
         
         setupView()
         setupToolBar()
         setupAnswerPool()
         setupAnswerBlock()
         setupQuestion()
+        
+        moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
+        moneyButton.setTitle(" \(money)", for: .normal)
+        moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
+        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
+        moneyButton.sizeToFit()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
     }
     
     func setupView() {
@@ -51,6 +59,10 @@ class GameViewController: UIViewController {
     
     func nextQuestion() { // 수정
         questionNumber = questionNumber + 1
+        UserDefaults.standard.set(questionNumber, forKey: "questionNumber")
+        navigationItem.title = "#\(questionNumber)"
+        moneyButton.setTitle(" \(money)", for: .normal)
+        moneyButton.sizeToFit()
     }
     
     func setupToolBar() {
@@ -138,6 +150,9 @@ class GameViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
                 self.questionLabel.text = self.emoji
                 self.removeAll()
+                self.money = self.money + 10
+                UserDefaults.standard.set(self.money + 10, forKey: "money")
+                self.nextQuestion()
                 })
         }
     }
@@ -186,6 +201,7 @@ class GameViewController: UIViewController {
             if let poolButtonTag = hiddenButtonTag[key] {
                 if let poolButton = self.view.viewWithTag(poolButtonTag) as? UIButton {
                     answerButton.setTitle(" ", for: .normal)
+                    userAnswer.remove(at: answerButton.tag - 100)
                     poolButton.isHidden = false
                     hiddenButtonTag.removeValue(forKey: key)
                 }

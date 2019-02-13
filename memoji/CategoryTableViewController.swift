@@ -11,6 +11,8 @@ import UIKit
 class CategoryTableViewController: UITableViewController {
     
     let categories = ["KPOP", "드라마", "영화"] // 수정
+    var money = UserDefaults.standard.integer(forKey: "money")
+    let moneyButton = UIButton(type: .system)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,10 +21,18 @@ class CategoryTableViewController: UITableViewController {
         tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
         tableView.backgroundColor = .clear
         
+        moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
+        moneyButton.setTitle(" \(money)", for: .normal)
+        moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
+        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
+        moneyButton.sizeToFit()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
+        
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.clipsToBounds = true
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -35,6 +45,10 @@ class CategoryTableViewController: UITableViewController {
         super.viewWillAppear(true)
         
         setupToolbar()
+        
+        money = UserDefaults.standard.integer(forKey: "money")
+        moneyButton.setTitle(" \(money)", for: .normal)
+        moneyButton.sizeToFit()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
