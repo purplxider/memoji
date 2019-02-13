@@ -15,11 +15,13 @@ class GameViewController: UIViewController {
     @IBOutlet weak var memoImage: UIImageView!
     @IBOutlet weak var questionLabel: UILabel!
     
+    // 기본적으로 필요한 변수
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"], answerPool: ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"])
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
     let moneyButton = UIButton(type: .system)
     
+    // 문제가 바뀔 때 업데이트 해줘야하는 값
     var emoji = String()
     var answerPool = [String]()
     var answer = [String]()
@@ -35,19 +37,16 @@ class GameViewController: UIViewController {
         answer = question.answer
         answerLength = question.length
         
+        // 화면 구성 셋업
         setupView()
         setupToolBar()
         setupAnswerPool()
         setupAnswerBlock()
         setupQuestion()
-        
-        moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
-        moneyButton.setTitle(" \(money)", for: .normal)
-        moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
-        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
-        moneyButton.sizeToFit()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
+        setupMoneyButton()
     }
+    
+    // 각종 함수들입니다
     
     func setupView() {
         backgroundImage.frame = UIScreen.main.bounds
@@ -68,7 +67,7 @@ class GameViewController: UIViewController {
     func setupToolBar() {
         let clear = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(removeAll)) // 수정
         clear.tintColor = UIColor.darkGray
-        let hint = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: nil) // 수정
+        let hint = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(getHint))
         hint.tintColor = UIColor.darkGray
         let share = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil) // 수정
         share.tintColor = UIColor.darkGray
@@ -86,7 +85,7 @@ class GameViewController: UIViewController {
         gameToolBar.setItems(items, animated: true)
     }
     
-    func setupAnswerBlock() { // 수정
+    func setupAnswerBlock() { // 수정 - 답의 길이에 따라 달라져야함
         var button = UIButton()
         var x = 16
         let y = 323
@@ -157,21 +156,29 @@ class GameViewController: UIViewController {
         }
     }
     
+    func setupMoneyButton() {
+        moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
+        moneyButton.setTitle(" \(money)", for: .normal)
+        moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
+        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
+        moneyButton.sizeToFit()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
+    }
+    
     @objc func removeAll() {
         userAnswer.removeAll()
         
+        for j in 200...(200+answerPool.count) {
+            if let poolButton = self.view.viewWithTag(j) as? UIButton {
+                poolButton.isEnabled = true
+                poolButton.isHidden = false
+            }
+        }
+        
         for i in 100...(100+answerLength) {
             if let answerButton = self.view.viewWithTag(i) as? UIButton {
-                if let poolButtonKey = hiddenButtonTag[answerButton.tag] {
-                    if let poolButton = self.view.viewWithTag(poolButtonKey) as? UIButton {
-                        if answerButton.titleLabel?.text != nil || answerButton.titleLabel?.text != " " {
-                            answerButton.setTitle(" ", for: .normal)
-                            poolButton.isHidden = false
-                            hiddenButtonTag.removeValue(forKey: answerButton.tag)
-                        }
-                        continue
-                    }
-                }
+                answerButton.setTitle(" ", for: .normal)
+                hiddenButtonTag.removeValue(forKey: answerButton.tag)
             }
         }
     }
@@ -206,6 +213,51 @@ class GameViewController: UIViewController {
                     hiddenButtonTag.removeValue(forKey: key)
                 }
             }
+        }
+    }
+    
+    @objc func getHint() {
+        if self.money >= 50 {
+            let alert = UIAlertController(title: "힌트 사용", message: "50 포인트를 감소하여 힌트를 사용하시겠습니까?", preferredStyle: .alert)
+            let use = UIAlertAction(title: "사용", style: .default, handler: { _ in
+                self.money = self.money - 50
+                UserDefaults.standard.set(self.money, forKey: "money")
+                self.moneyButton.setTitle(" \(self.money)", for: .normal)
+                self.moneyButton.sizeToFit()
+                
+                for i in 100...(100+self.answerLength) {
+                        if let answerButton = self.view.viewWithTag(i) as? UIButton {
+                            if answerButton.titleLabel?.text == nil || answerButton.titleLabel?.text == " " {
+                                answerButton.setTitle(self.answer[answerButton.tag - 100], for: .normal)
+                                self.userAnswer.insert(self.answer[answerButton.tag - 100], at: (answerButton.tag - 100))
+                                for j in 200...(200+self.answerPool.count) {
+                                    if let poolButton = self.view.viewWithTag(j) as? UIButton {
+                                        if poolButton.titleLabel?.text == self.answer[answerButton.tag - 100] {
+                                            poolButton.isEnabled = false
+                                            poolButton.isHidden = true
+                                        }
+                                    }
+                                }
+                                self.checkIfCorrect()
+                                print(self.userAnswer, self.answer)
+                                break
+                            }
+                            continue
+                        }
+                    }
+                })
+            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            
+            alert.addAction(use)
+            alert.addAction(cancel)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            let noMoney = UIAlertController(title: "힌트를 보기에 돈이 부족합니다", message: nil, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
+            noMoney.addAction(ok)
+            self.present(noMoney, animated: true, completion: nil)
         }
     }
 
