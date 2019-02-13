@@ -15,16 +15,24 @@ class GameViewController: UIViewController {
     @IBOutlet weak var memoImage: UIImageView!
     @IBOutlet weak var questionLabel: UILabel!
     
-    var question = "🔁🤝🌏"
-    var answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
-    var answer = ["다", "시", "만", "난", "세", "계"] //수정
+    var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"], answerPool: ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"])
+    
+    var emoji = String()
+    var answerPool = [String]()
+    var answer = [String]()
+    var answerLength = Int()
+    var questionNumber = Int()
     var userAnswer = [String]()
-    var answerLength = 6 // 수정
-    var questionNumber = 1 // 수정
     var hiddenButtonTag = [Int:Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        emoji = question.emoji
+        answerPool = question.answerPool
+        answer = question.answer
+        answerLength = question.length
+        questionNumber = 1 // 수정
         
         setupView()
         setupToolBar()
@@ -121,17 +129,22 @@ class GameViewController: UIViewController {
     }
     
     func setupQuestion() {
-        questionLabel.text = question
-        print(question)
+        questionLabel.text = emoji
     }
     
     func checkIfCorrect() {
         if userAnswer == answer {
-            setupQuestion()
+            questionLabel.text = "정답"
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+                self.questionLabel.text = self.emoji
+                self.removeAll()
+                })
         }
     }
     
     @objc func removeAll() {
+        userAnswer.removeAll()
+        
         for i in 100...(100+answerLength) {
             if let answerButton = self.view.viewWithTag(i) as? UIButton {
                 if let poolButtonKey = hiddenButtonTag[answerButton.tag] {
@@ -140,7 +153,6 @@ class GameViewController: UIViewController {
                             answerButton.setTitle(" ", for: .normal)
                             poolButton.isHidden = false
                             hiddenButtonTag.removeValue(forKey: answerButton.tag)
-                            print(hiddenButtonTag)
                         }
                         continue
                     }
@@ -159,6 +171,7 @@ class GameViewController: UIViewController {
                     let text = poolButton.titleLabel?.text as! String
                     userAnswer.insert(text, at: (answerButton.tag - 100))
                     checkIfCorrect()
+                    print(userAnswer, answer)
                     break
                 }
                 continue

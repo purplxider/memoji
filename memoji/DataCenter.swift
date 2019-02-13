@@ -11,27 +11,27 @@ import Foundation
 
 class Question:NSObject, NSCoding {
     
-    let question: String
+    let emoji: String
     let length: Int
     let answer: [String]
     var answerPool: [String]
     
-    init(question:String, length:Int, answer:[String], answerPool:[String]) {
-        self.question = question
+    init(emoji:String, length:Int, answer:[String], answerPool:[String]) {
+        self.emoji = emoji
         self.length = length
         self.answer = answer
         self.answerPool = answerPool
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.question, forKey: "question")
+        aCoder.encode(self.emoji, forKey: "emoji")
         aCoder.encode(self.length, forKey: "length")
         aCoder.encode(self.answer, forKey: "answer")
         aCoder.encode(self.answerPool, forKey: "answerPool")
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.question = aDecoder.decodeObject(forKey: "question") as! String
+        self.emoji = aDecoder.decodeObject(forKey: "emoji") as! String
         self.length = aDecoder.decodeObject(forKey: "length") as! Int
         self.answer = aDecoder.decodeObject(forKey: "answer") as! [String]
         self.answerPool = aDecoder.decodeObject(forKey: "answerPool") as! [String]
