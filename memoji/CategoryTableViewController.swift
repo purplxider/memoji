@@ -16,23 +16,10 @@ class CategoryTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 80.0
-                
-        tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
-        tableView.backgroundColor = .clear
         
-        moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
-        moneyButton.setTitle(" \(money)", for: .normal)
-        moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
-        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
-        moneyButton.sizeToFit()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
-        
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.clipsToBounds = true
-        
+        setupTableView()
+        setupNavigationBar()
+        setupMoneyButton()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -82,6 +69,13 @@ class CategoryTableViewController: UITableViewController {
         return cell
     }
     
+    func setupTableView() {
+        self.tableView.rowHeight = 80.0
+        
+        tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
+        tableView.backgroundColor = .clear
+    }
+    
     func setupToolbar() {
         navigationController?.setToolbarHidden(false, animated: true)
         navigationController?.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
@@ -95,6 +89,22 @@ class CategoryTableViewController: UITableViewController {
         items.append(space)
         items.append(favorite)
         self.toolbarItems = items
+    }
+    
+    func setupMoneyButton() {
+        moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
+        moneyButton.setTitle(" \(money)", for: .normal)
+        moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
+        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
+        moneyButton.sizeToFit()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
+    }
+    
+    func setupNavigationBar() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.clipsToBounds = true
     }
 
     /*
