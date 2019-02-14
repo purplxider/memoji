@@ -20,6 +20,7 @@ class GameViewController: UIViewController {
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
     let moneyButton = UIButton(type: .system)
+    var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [Int]
     var isFavorite = false
     
     // 문제가 바뀔 때 업데이트 해줘야하는 값
@@ -55,6 +56,10 @@ class GameViewController: UIViewController {
         backgroundImage.image = UIImage(named: "background.png")
         memoImage.image = UIImage(named: "memo.png")
         navigationItem.title = "#\(questionNumber)" // 수정
+        
+        if favoriteList.contains(questionNumber) {
+            isFavorite = true
+        }
     }
     
     func nextQuestion() { // 수정
@@ -63,6 +68,10 @@ class GameViewController: UIViewController {
         navigationItem.title = "#\(questionNumber)"
         moneyButton.setTitle(" \(money)", for: .normal)
         moneyButton.sizeToFit()
+        
+        if favoriteList.contains(questionNumber) {
+            isFavorite = true
+        }
     }
     
     func setupToolBar() {
@@ -266,9 +275,15 @@ class GameViewController: UIViewController {
         
         if isFavorite {
             favoriteButton.image = UIImage(named: "filledHeart.png")
+            favoriteList.append(questionNumber)
+            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+            print(favoriteList)
         }
         else {
             favoriteButton.image = UIImage(named: "unfilledHeart.png")
+            favoriteList = favoriteList.filter({$0 != questionNumber})
+            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+            print(favoriteList)
         }
     }
 
