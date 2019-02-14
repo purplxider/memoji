@@ -20,6 +20,7 @@ class GameViewController: UIViewController {
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
     let moneyButton = UIButton(type: .system)
+    var isFavorite = false
     
     // 문제가 바뀔 때 업데이트 해줘야하는 값
     var emoji = String()
@@ -71,7 +72,7 @@ class GameViewController: UIViewController {
         hint.tintColor = UIColor.darkGray
         let share = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil) // 수정
         share.tintColor = UIColor.darkGray
-        let favorite = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil) // 수정
+        let favorite = UIBarButtonItem(image: UIImage(named: "unfilledHeart.png"), style: .plain, target: self, action: #selector(toggleFavorite(_:)))
         favorite.tintColor = UIColor.darkGray
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         var items = [UIBarButtonItem]()
@@ -160,7 +161,6 @@ class GameViewController: UIViewController {
         moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
         moneyButton.setTitle(" \(money)", for: .normal)
         moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
-        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
         moneyButton.sizeToFit()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
     }
@@ -207,8 +207,8 @@ class GameViewController: UIViewController {
             let key = answerButton.tag
             if let poolButtonTag = hiddenButtonTag[key] {
                 if let poolButton = self.view.viewWithTag(poolButtonTag) as? UIButton {
+                    userAnswer = userAnswer.filter({ $0 != answerButton.titleLabel?.text })
                     answerButton.setTitle(" ", for: .normal)
-                    userAnswer.remove(at: answerButton.tag - 100)
                     poolButton.isHidden = false
                     hiddenButtonTag.removeValue(forKey: key)
                 }
@@ -258,6 +258,17 @@ class GameViewController: UIViewController {
             let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
             noMoney.addAction(ok)
             self.present(noMoney, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func toggleFavorite(_ favoriteButton: UIBarButtonItem) {
+        isFavorite = !isFavorite
+        
+        if isFavorite {
+            favoriteButton.image = UIImage(named: "filledHeart.png")
+        }
+        else {
+            favoriteButton.image = UIImage(named: "unfilledHeart.png")
         }
     }
 

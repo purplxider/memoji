@@ -82,7 +82,7 @@ class CategoryTableViewController: UITableViewController {
         navigationController?.toolbar.clipsToBounds = true
         navigationController?.toolbar.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
         let plus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil) // 수정
-        let favorite = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: nil) // 수정
+        let favorite = UIBarButtonItem(image: UIImage(named: "filledHeart.png"), style: .plain, target: self, action: nil) // 수정
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         var items = [UIBarButtonItem]()
         items.append(plus)
@@ -95,7 +95,6 @@ class CategoryTableViewController: UITableViewController {
         moneyButton.setImage(UIImage(named: "user.png"), for: .normal)
         moneyButton.setTitle(" \(money)", for: .normal)
         moneyButton.titleLabel?.font = UIFont.systemFont(ofSize: 22.0, weight: .semibold)
-        //moneyButton.titleLabel?.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
         moneyButton.sizeToFit()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: moneyButton)
     }
