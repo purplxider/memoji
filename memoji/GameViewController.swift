@@ -82,6 +82,9 @@ class GameViewController: UIViewController {
         let share = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil) // 수정
         share.tintColor = UIColor.darkGray
         let favorite = UIBarButtonItem(image: UIImage(named: "unfilledHeart.png"), style: .plain, target: self, action: #selector(toggleFavorite(_:)))
+        if isFavorite {
+            favorite.image = UIImage(named: "filledHeart.png")
+        }
         favorite.tintColor = UIColor.darkGray
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         var items = [UIBarButtonItem]()
