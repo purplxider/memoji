@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     
     // 기본적으로 필요한 변수
-    var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"], answerPool: ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"])
+    var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"])
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
     let moneyButton = UIButton(type: .system)
@@ -35,7 +35,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         emoji = question.emoji
-        answerPool = question.answerPool
+        answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
         answer = question.answer
         answerLength = question.length
         
