@@ -16,6 +16,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     
     // 기본적으로 필요한 변수
+    var questionBank = QuestionBank()
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"])
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
