@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     
     // 기본적으로 필요한 변수
-    var questionBank = QuestionBank()
+    var questionBank = [Question]()
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"])
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
@@ -133,7 +133,7 @@ class GameViewController: UIViewController {
             for _ in 0...6 {
                 button = UIButton(frame: CGRect(x: x, y: y, width: 32, height: 42))
                 button.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                button.setTitle(answerPool[count], for: .normal)
+                button.setTitle(answerPool[count], for: .normal) // 수정
                 button.setTitleColor(UIColor.black, for: .normal)
                 button.tag = count + 200
                 button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -150,6 +150,28 @@ class GameViewController: UIViewController {
             }
             x = 21
             y = y + 72
+        }
+    }
+    
+    func updateAnswerPool() { // 테스트 해보아야 함
+        answerPool.removeAll()
+        let answerPoolQuestionBank = questionBank.filter({$0.length == answerLength})
+        for questions in answerPoolQuestionBank {
+            answerPool += questions.answer
+        }
+        
+        var temp = [String]()
+        for _ in 1...(12 - answerLength) {
+            temp.append(answerPool.randomElement()!)
+        }
+        answerPool = temp
+        answerPool += answer
+        answerPool = answerPool.shuffled()
+        
+        for i in 200...(200+answerPool.count) {
+            if let poolButton = self.view.viewWithTag(i) as? UIButton {
+                poolButton.setTitle(answerPool[i - 200], for: .normal)
+            }
         }
     }
     
