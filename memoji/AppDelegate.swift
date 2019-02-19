@@ -26,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UserDefaults.standard.object(forKey: "favorite") == nil {
             UserDefaults.standard.set([Int](), forKey: "favorite")
         }
+        if UserDefaults.standard.object(forKey: "solved") == nil {
+            UserDefaults.standard.set([Int](), forKey: "solved")
+        }
         
         return true
     }

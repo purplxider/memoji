@@ -46,6 +46,7 @@ class FavoriteTableViewController: UITableViewController {
             favoriteQuestionBank[i] = questionBank[i]
         }
         
+        let favoriteQuestionNumbers = Array(favoriteQuestionBank.keys)
         let favoriteQuestions = Array(favoriteQuestionBank.values)
         var answer = String()
         
@@ -53,8 +54,8 @@ class FavoriteTableViewController: UITableViewController {
             answer.append(answerKeys)
         }
         
-        cell.textLabel?.text = "\(favoriteQuestions[indexPath.row].emoji)"
-        cell.detailTextLabel?.text = answer
+        cell.textLabel?.text = "#\(favoriteQuestionNumbers[indexPath.row])"
+        cell.detailTextLabel?.text = "\(favoriteQuestions[indexPath.row].emoji)"
 
         return cell
     }

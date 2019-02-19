@@ -22,7 +22,9 @@ class GameViewController: UIViewController {
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
     let moneyButton = UIButton(type: .system)
     var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [Int]
+    var solvedList = UserDefaults.standard.array(forKey: "solved") as! [Int]
     var isFavorite = false
+    var isSolved = false
     
     // 문제가 바뀔 때 업데이트 해줘야하는 값
     var emoji = String()
@@ -43,7 +45,9 @@ class GameViewController: UIViewController {
         // 화면 구성 셋업
         setupView()
         setupToolBar()
-        setupAnswerPool()
+        if isSolved == false {
+            setupAnswerPool()
+        }
         setupAnswerBlock()
         setupQuestion()
         setupMoneyButton()
@@ -60,6 +64,9 @@ class GameViewController: UIViewController {
         
         if favoriteList.contains(questionNumber) {
             isFavorite = true
+        }
+        if solvedList.contains(questionNumber) {
+            isSolved = true
         }
     }
     
@@ -101,7 +108,8 @@ class GameViewController: UIViewController {
     
     func setupAnswerBlock() { // 수정 - 답의 길이에 따라 달라져야함
         var button = UIButton()
-        var x = 16
+        let fixedX = (Int(UIScreen.main.bounds.width) - 44 * answerLength) / 7
+        var x = fixedX
         let y = 323
         var count = 0
         
@@ -117,8 +125,13 @@ class GameViewController: UIViewController {
             button.layer.cornerRadius = 4.0
             button.showsTouchWhenHighlighted = true
             button.addTarget(self, action: #selector(deselectAnswer(_:)), for: .touchUpInside)
+            
+            if isSolved {
+                button.setTitle(answer[count], for: .normal)
+            }
+            
             self.view.addSubview(button)
-            x = x + 60
+            x = x + fixedX + 44
             count = count + 1
         }
     }
