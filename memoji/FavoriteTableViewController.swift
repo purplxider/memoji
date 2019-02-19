@@ -16,6 +16,8 @@ class FavoriteTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupTableView()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -55,6 +57,13 @@ class FavoriteTableViewController: UITableViewController {
         cell.detailTextLabel?.text = answer
 
         return cell
+    }
+    
+    func setupTableView() {
+        self.tableView.rowHeight = 80.0
+        
+        tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
+        tableView.backgroundColor = .clear
     }
 
     /*
