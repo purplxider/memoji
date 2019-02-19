@@ -37,6 +37,8 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        memoImage.isHidden = true
+        
         emoji = question.emoji
         answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
         answer = question.answer
