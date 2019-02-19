@@ -18,6 +18,8 @@
 		523E79ED220BC3FE003EA7C7 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */; };
 		523E79EF220BD92F003EA7C7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79EE220BD92F003EA7C7 /* GameViewController.swift */; };
 		523E79F1220D7AD1003EA7C7 /* DataCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79F0220D7AD1003EA7C7 /* DataCenter.swift */; };
+		52C5AA01221BA59700C817C4 /* Favorite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C5AA00221BA59700C817C4 /* Favorite.storyboard */; };
+		52C5AA03221BA61500C817C4 /* FavoriteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5AA02221BA61500C817C4 /* FavoriteTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		523E79EE220BD92F003EA7C7 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		523E79F0220D7AD1003EA7C7 /* DataCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCenter.swift; sourceTree = "<group>"; };
+		52C5AA00221BA59700C817C4 /* Favorite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorite.storyboard; sourceTree = "<group>"; };
+		52C5AA02221BA61500C817C4 /* FavoriteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				523E79EA220BBD8F003EA7C7 /* MainViewController.swift */,
 				523E79C3220BB772003EA7C7 /* Assets.xcassets */,
 				523E79C5220BB772003EA7C7 /* LaunchScreen.storyboard */,
+				52C5AA00221BA59700C817C4 /* Favorite.storyboard */,
+				52C5AA02221BA61500C817C4 /* FavoriteTableViewController.swift */,
 				523E79C8220BB772003EA7C7 /* Info.plist */,
 			);
 			path = memoji;
@@ -242,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				523E79C7220BB772003EA7C7 /* LaunchScreen.storyboard in Resources */,
+				52C5AA01221BA59700C817C4 /* Favorite.storyboard in Resources */,
 				523E79C4220BB772003EA7C7 /* Assets.xcassets in Resources */,
 				523E79C2220BB770003EA7C7 /* Main.storyboard in Resources */,
 			);
@@ -274,6 +281,7 @@
 				523E79BF220BB770003EA7C7 /* ViewController.swift in Sources */,
 				523E79BD220BB770003EA7C7 /* AppDelegate.swift in Sources */,
 				523E79ED220BC3FE003EA7C7 /* CategoryTableViewController.swift in Sources */,
+				52C5AA03221BA61500C817C4 /* FavoriteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
