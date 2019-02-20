@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52224801221D1EF1009FA3DC /* CustomQuestion.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52224800221D1EF0009FA3DC /* CustomQuestion.storyboard */; };
+		52224803221D1FE5009FA3DC /* CustomQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52224802221D1FE5009FA3DC /* CustomQuestionViewController.swift */; };
 		523E79BD220BB770003EA7C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79BC220BB770003EA7C7 /* AppDelegate.swift */; };
 		523E79BF220BB770003EA7C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79BE220BB770003EA7C7 /* ViewController.swift */; };
 		523E79C2220BB770003EA7C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523E79C0220BB770003EA7C7 /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52224800221D1EF0009FA3DC /* CustomQuestion.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomQuestion.storyboard; sourceTree = "<group>"; };
+		52224802221D1FE5009FA3DC /* CustomQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuestionViewController.swift; sourceTree = "<group>"; };
 		523E79B9220BB770003EA7C7 /* memoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = memoji.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		523E79BC220BB770003EA7C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		523E79BE220BB770003EA7C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				523E79BC220BB770003EA7C7 /* AppDelegate.swift */,
 				523E79BE220BB770003EA7C7 /* ViewController.swift */,
 				523E79C0220BB770003EA7C7 /* Main.storyboard */,
+				52224800221D1EF0009FA3DC /* CustomQuestion.storyboard */,
+				52224802221D1FE5009FA3DC /* CustomQuestionViewController.swift */,
 				523E79EE220BD92F003EA7C7 /* GameViewController.swift */,
 				523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */,
 				523E79EA220BBD8F003EA7C7 /* MainViewController.swift */,
@@ -247,6 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52224801221D1EF1009FA3DC /* CustomQuestion.storyboard in Resources */,
 				523E79C7220BB772003EA7C7 /* LaunchScreen.storyboard in Resources */,
 				52C5AA01221BA59700C817C4 /* Favorite.storyboard in Resources */,
 				523E79C4220BB772003EA7C7 /* Assets.xcassets in Resources */,
@@ -278,6 +285,7 @@
 				523E79F1220D7AD1003EA7C7 /* DataCenter.swift in Sources */,
 				523E79EF220BD92F003EA7C7 /* GameViewController.swift in Sources */,
 				523E79EB220BBD8F003EA7C7 /* MainViewController.swift in Sources */,
+				52224803221D1FE5009FA3DC /* CustomQuestionViewController.swift in Sources */,
 				523E79BF220BB770003EA7C7 /* ViewController.swift in Sources */,
 				523E79BD220BB770003EA7C7 /* AppDelegate.swift in Sources */,
 				523E79ED220BC3FE003EA7C7 /* CategoryTableViewController.swift in Sources */,
