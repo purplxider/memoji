@@ -8,6 +8,52 @@
 
 import Foundation
 
+let fileName = "Questions.pxr"
+
+class QuestionBank:NSObject, NSCoding {
+    
+    var questions = [Question]()
+    
+    var filePath:String { get {
+        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        return documentDirectory + fileName
+        }}
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.questions, forKey: "questions")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.questions = aDecoder.decodeObject(forKey: "questions") as! [Question]
+    }
+    
+    override init() {
+        super.init()
+        
+        if FileManager.default.fileExists(atPath: filePath) {
+            // 수정 - 읽기
+            do {
+                let rawData = try Data(contentsOf: URL(string: filePath)!)
+                if let unarchArray = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(rawData) as? [Question] {
+                    questions += unarchArray
+                }
+            } catch {
+                
+            }
+        } else {
+            questions.append(Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
+        }
+    }
+    
+    func save() {
+        do {
+        let data = try NSKeyedArchiver.archivedData(withRootObject: questions, requiringSecureCoding: false)
+            try data.write(to: URL(string: filePath)!)
+        } catch {
+            
+        }
+    }
+}
 
 class Question:NSObject, NSCoding {
     

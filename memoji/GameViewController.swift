@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     
     // 기본적으로 필요한 변수
-    var questionBank = [Question]()
+    var questionBank = QuestionBank()
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"])
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
@@ -39,6 +39,7 @@ class GameViewController: UIViewController {
         
         memoImage.isHidden = true
         
+        question = questionBank.questions[questionNumber - 1]
         emoji = question.emoji
         answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
         answer = question.answer
@@ -73,11 +74,13 @@ class GameViewController: UIViewController {
     }
     
     func nextQuestion() { // 수정
-        questionNumber = questionNumber + 1
+        // questionNumber = questionNumber + 1
         UserDefaults.standard.set(questionNumber, forKey: "questionNumber")
         navigationItem.title = "#\(questionNumber)"
         moneyButton.setTitle(" \(money)", for: .normal)
         moneyButton.sizeToFit()
+        
+        question = questionBank.questions[questionNumber - 1]
         
         if favoriteList.contains(questionNumber) {
             isFavorite = true
@@ -170,7 +173,7 @@ class GameViewController: UIViewController {
     
     func updateAnswerPool() { // 테스트 해보아야 함
         answerPool.removeAll()
-        let answerPoolQuestionBank = questionBank.filter({$0.length == answerLength})
+        let answerPoolQuestionBank = questionBank.questions.filter({$0.length == answerLength})
         for questions in answerPoolQuestionBank {
             answerPool += questions.answer
         }
