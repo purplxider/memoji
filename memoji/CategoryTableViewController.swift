@@ -157,9 +157,7 @@ class CategoryTableViewController: UITableViewController {
             }
             
             var gameVC = segue.destination as! GameViewController
-            print("BH", gameVC.category)
             gameVC.category = category
-            print(gameVC.category)
         }
         
     }

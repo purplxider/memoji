@@ -44,30 +44,9 @@ class QuestionBank:NSObject, NSCoding {
             }
         }
         
-        if FileManager.default.fileExists(atPath: getFilePath(fileName: kpopFileName)) {
-            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: kpopFileName)) as? [Question] {
-                kpopQuestions += unarchArray
-            }
-        } else {
-            defaultKpopQuestions(questions: &kpopQuestions)
-        }
-        
-        if FileManager.default.fileExists(atPath: getFilePath(fileName: dramaFileName)) {
-            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: dramaFileName)) as? [Question] {
-                dramaQuestions += unarchArray
-            }
-        } else {
-            defaultDramaQuestions(questions: &dramaQuestions)
-        }
-        
-        if FileManager.default.fileExists(atPath: getFilePath(fileName: movieFileName)) {
-            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: movieFileName)) as? [Question] {
-                movieQuestions += unarchArray
-            }
-        } else {
-            defaultMovieQuestions(questions: &movieQuestions)
-        }
-        
+        defaultKpopQuestions(questions: &kpopQuestions)
+        defaultDramaQuestions(questions: &dramaQuestions)
+        defaultMovieQuestions(questions: &movieQuestions)
     }
     
     func saveCustomQuestions() {
