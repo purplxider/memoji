@@ -8,9 +8,6 @@
 
 import Foundation
 
-let kpopFileName = "KpopQuestions.pxr"
-let dramaFileName = "DramaQuestions.pxr"
-let movieFileName = "MovieQuestions.pxr"
 let customFileName = "CustomQuestions.pxr"
 
 class QuestionBank:NSObject, NSCoding {
