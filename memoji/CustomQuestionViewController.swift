@@ -14,7 +14,19 @@ class CustomQuestionViewController: UIViewController {
     @IBOutlet weak var answerTextField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     
-    var questionBank = QuestionBank()
+    var questionBank = [Question]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let customData = UserDefaults.standard.object(forKey: "custom") as? Data {
+            let customQuestions = NSKeyedUnarchiver.unarchiveObject(with: customData) as! [Question]
+            questionBank += customQuestions
+        }
+        
+        backgroundImage.image = UIImage(named: "background.png")
+        // Do any additional setup after loading the view.
+    }
     
     @IBAction func save(_ sender: Any) {
         if questionTextField.text != nil && answerTextField.text != nil {
@@ -22,17 +34,13 @@ class CustomQuestionViewController: UIViewController {
             let answerText = answerTextField.text!
             let answerArray = answerText.map({String($0)})
             let question = Question(emoji: questionText, length: answerText.count, answer: answerArray)
-            questionBank.customQuestions.append(question)
-            questionBank.saveCustomQuestions()
+            questionBank.append(question)
+            
+            let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: questionBank)
+            UserDefaults.standard.set(encodedData, forKey: "custom")
+            
+            dismiss(animated: true, completion: nil)
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
-        backgroundImage.image = UIImage(named: "background.png")
-        // Do any additional setup after loading the view.
     }
     
 

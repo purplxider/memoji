@@ -17,7 +17,6 @@ class GameViewController: UIViewController {
     
     // 기본적으로 필요한 변수
     var category: String!
-    var questionBank = QuestionBank()
     var categoryQuestions = [Question]()
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"])
     var money = UserDefaults.standard.integer(forKey: "money")
@@ -63,16 +62,24 @@ class GameViewController: UIViewController {
     
     func setupQuestionBank() {
         if category == "KPOP" {
-            categoryQuestions = questionBank.kpopQuestions
+            let data = UserDefaults.standard.data(forKey: "kpop")
+            let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
+            categoryQuestions = questions
         }
         else if category == "드라마" {
-            categoryQuestions = questionBank.dramaQuestions
+            let data = UserDefaults.standard.data(forKey: "drama")
+            let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
+            categoryQuestions = questions
         }
         else if category == "영화" {
-            categoryQuestions = questionBank.movieQuestions
+            let data = UserDefaults.standard.data(forKey: "movie")
+            let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
+            categoryQuestions = questions
         }
         else if category == "커스텀" {
-            categoryQuestions = questionBank.customQuestions
+            let data = UserDefaults.standard.data(forKey: "custom")
+            let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
+            categoryQuestions = questions
         }
     }
     
@@ -131,7 +138,7 @@ class GameViewController: UIViewController {
     
     func setupAnswerBlock() { // 수정 - 답의 길이에 따라 달라져야함
         var button = UIButton()
-        let fixedX = (Int(UIScreen.main.bounds.width) - 44 * answerLength) / 7
+        let fixedX = (Int(UIScreen.main.bounds.width) - 44 * answerLength) / (answerLength + 1)
         var x = fixedX
         let y = 323
         var count = 0

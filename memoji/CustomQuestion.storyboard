@@ -13,7 +13,7 @@
         <!--Custom Question View Controller-->
         <scene sceneID="yXX-jk-yQM">
             <objects>
-                <viewController id="m50-lc-KDF" customClass="CustomQuestionViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CustomQuestion" id="m50-lc-KDF" customClass="CustomQuestionViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g0k-tE-qfe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

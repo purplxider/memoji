@@ -8,69 +8,6 @@
 
 import Foundation
 
-let customFileName = "CustomQuestions.pxr"
-
-class QuestionBank:NSObject, NSCoding {
-    
-    var kpopQuestions = [Question]()
-    var dramaQuestions = [Question]()
-    var movieQuestions = [Question]()
-    var customQuestions = [Question]()
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.kpopQuestions, forKey: "kpopQuestions")
-        aCoder.encode(self.dramaQuestions, forKey: "dramaQuestions")
-        aCoder.encode(self.movieQuestions, forKey: "movieQuestions")
-        aCoder.encode(self.customQuestions, forKey: "customQuestions")
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        self.kpopQuestions = aDecoder.decodeObject(forKey: "kpopQuestions") as! [Question]
-        self.dramaQuestions = aDecoder.decodeObject(forKey: "dramaQuestions") as! [Question]
-        self.movieQuestions = aDecoder.decodeObject(forKey: "movieQuestions") as! [Question]
-        self.customQuestions = aDecoder.decodeObject(forKey: "customQuestions") as! [Question]
-
-    }
-    
-    override init() {
-        super.init()
-        
-        if FileManager.default.fileExists(atPath: getFilePath(fileName: customFileName)) {
-            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: customFileName)) as? [Question] {
-                customQuestions += unarchArray
-            }
-        }
-        
-        defaultKpopQuestions(questions: &kpopQuestions)
-        defaultDramaQuestions(questions: &dramaQuestions)
-        defaultMovieQuestions(questions: &movieQuestions)
-    }
-    
-    func saveCustomQuestions() {
-        NSKeyedArchiver.archiveRootObject(customQuestions, toFile: getFilePath(fileName: customFileName))
-    }
-    
-    func defaultKpopQuestions(questions: inout [Question]) {
-        questions.append(Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
-    }
-    
-    func defaultDramaQuestions(questions: inout [Question]) {
-        questions.append(Question(emoji: "🔁🤝2", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
-    }
-    
-    func defaultMovieQuestions(questions: inout [Question]) {
-        questions.append(Question(emoji: "🔁🤝3", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
-    }
-    
-    func getFilePath(fileName: String) -> String {
-        var filePath:String { get {
-            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            return documentDirectory + fileName
-            }}
-        return filePath
-    }
-}
-
 class Question:NSObject, NSCoding {
     
     let emoji: String
@@ -91,7 +28,7 @@ class Question:NSObject, NSCoding {
     
     required init?(coder aDecoder: NSCoder) {
         self.emoji = aDecoder.decodeObject(forKey: "emoji") as! String
-        self.length = aDecoder.decodeObject(forKey: "length") as! Int
+        self.length = aDecoder.decodeInteger(forKey: "length")
         self.answer = aDecoder.decodeObject(forKey: "answer") as! [String]
     }
 }
