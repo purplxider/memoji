@@ -8,50 +8,90 @@
 
 import Foundation
 
-let fileName = "Questions.pxr"
+let kpopFileName = "KpopQuestions.pxr"
+let dramaFileName = "DramaQuestions.pxr"
+let movieFileName = "MovieQuestions.pxr"
+let customFileName = "CustomQuestions.pxr"
 
 class QuestionBank:NSObject, NSCoding {
     
-    var questions = [Question]()
-    
-    var filePath:String { get {
-        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        return documentDirectory + fileName
-        }}
+    var kpopQuestions = [Question]()
+    var dramaQuestions = [Question]()
+    var movieQuestions = [Question]()
+    var customQuestions = [Question]()
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.questions, forKey: "questions")
+        aCoder.encode(self.kpopQuestions, forKey: "kpopQuestions")
+        aCoder.encode(self.dramaQuestions, forKey: "dramaQuestions")
+        aCoder.encode(self.movieQuestions, forKey: "movieQuestions")
+        aCoder.encode(self.customQuestions, forKey: "customQuestions")
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.questions = aDecoder.decodeObject(forKey: "questions") as! [Question]
+        self.kpopQuestions = aDecoder.decodeObject(forKey: "kpopQuestions") as! [Question]
+        self.dramaQuestions = aDecoder.decodeObject(forKey: "dramaQuestions") as! [Question]
+        self.movieQuestions = aDecoder.decodeObject(forKey: "movieQuestions") as! [Question]
+        self.customQuestions = aDecoder.decodeObject(forKey: "customQuestions") as! [Question]
+
     }
     
     override init() {
         super.init()
         
-        if FileManager.default.fileExists(atPath: filePath) {
-            // 수정 - 읽기
-            do {
-                let rawData = try Data(contentsOf: URL(string: filePath)!)
-                if let unarchArray = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(rawData) as? [Question] {
-                    questions += unarchArray
-                }
-            } catch {
-                
+        if FileManager.default.fileExists(atPath: getFilePath(fileName: customFileName)) {
+            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: customFileName)) as? [Question] {
+                customQuestions += unarchArray
+            }
+        }
+        
+        if FileManager.default.fileExists(atPath: getFilePath(fileName: kpopFileName)) {
+            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: kpopFileName)) as? [Question] {
+                kpopQuestions += unarchArray
             }
         } else {
-            questions.append(Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
+            defaultKpopQuestions(questions: &kpopQuestions)
         }
+        
+        if FileManager.default.fileExists(atPath: getFilePath(fileName: dramaFileName)) {
+            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: dramaFileName)) as? [Question] {
+                dramaQuestions += unarchArray
+            }
+        } else {
+            defaultDramaQuestions(questions: &dramaQuestions)
+        }
+        
+        if FileManager.default.fileExists(atPath: getFilePath(fileName: movieFileName)) {
+            if let unarchArray = NSKeyedUnarchiver.unarchiveObject(withFile: getFilePath(fileName: movieFileName)) as? [Question] {
+                movieQuestions += unarchArray
+            }
+        } else {
+            defaultMovieQuestions(questions: &movieQuestions)
+        }
+        
     }
     
-    func save() {
-        do {
-        let data = try NSKeyedArchiver.archivedData(withRootObject: questions, requiringSecureCoding: false)
-            try data.write(to: URL(string: filePath)!)
-        } catch {
-            
-        }
+    func saveCustomQuestions() {
+        NSKeyedArchiver.archiveRootObject(customQuestions, toFile: getFilePath(fileName: customFileName))
+    }
+    
+    func defaultKpopQuestions(questions: inout [Question]) {
+        questions.append(Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
+    }
+    
+    func defaultDramaQuestions(questions: inout [Question]) {
+        questions.append(Question(emoji: "🔁🤝2", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
+    }
+    
+    func defaultMovieQuestions(questions: inout [Question]) {
+        questions.append(Question(emoji: "🔁🤝3", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
+    }
+    
+    func getFilePath(fileName: String) -> String {
+        var filePath:String { get {
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            return documentDirectory + fileName
+            }}
+        return filePath
     }
 }
 

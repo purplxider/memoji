@@ -14,12 +14,16 @@ class CustomQuestionViewController: UIViewController {
     @IBOutlet weak var answerTextField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     
+    var questionBank = QuestionBank()
+    
     @IBAction func save(_ sender: Any) {
         if questionTextField.text != nil && answerTextField.text != nil {
             let questionText = questionTextField.text!
             let answerText = answerTextField.text!
             let answerArray = answerText.map({String($0)})
             let question = Question(emoji: questionText, length: answerText.count, answer: answerArray)
+            questionBank.customQuestions.append(question)
+            questionBank.saveCustomQuestions()
         }
     }
     

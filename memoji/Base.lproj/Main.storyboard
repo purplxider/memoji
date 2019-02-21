@@ -60,7 +60,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="gSK-YI-FL1" kind="show" id="3Gk-cE-7WM"/>
+                                    <segue destination="gSK-YI-FL1" kind="show" identifier="startGame" id="vfF-2R-k1y"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -143,6 +143,7 @@
             <objects>
                 <navigationController storyboardIdentifier="navigationController" id="x8W-3V-nPm" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CJ0-RJ-UGF">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.89411764709999997" green="0.68627450980000004" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">

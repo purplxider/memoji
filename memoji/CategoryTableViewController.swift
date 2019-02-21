@@ -13,6 +13,7 @@ class CategoryTableViewController: UITableViewController {
     let categories = ["KPOP", "드라마", "영화"] // 수정
     var money = UserDefaults.standard.integer(forKey: "money")
     let moneyButton = UIButton(type: .system)
+    var category: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,14 +142,27 @@ class CategoryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "startGame" {
+            
+            if let cell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as? UITableViewCell {
+                category = (cell.textLabel?.text)!
+            }
+            
+            var gameVC = segue.destination as! GameViewController
+            print("BH", gameVC.category)
+            gameVC.category = category
+            print(gameVC.category)
+        }
+        
     }
-    */
+    
 
 }

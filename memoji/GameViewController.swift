@@ -16,7 +16,9 @@ class GameViewController: UIViewController {
     @IBOutlet weak var questionLabel: UILabel!
     
     // 기본적으로 필요한 변수
+    var category: String!
     var questionBank = QuestionBank()
+    var categoryQuestions = [Question]()
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"])
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
@@ -39,7 +41,8 @@ class GameViewController: UIViewController {
         
         memoImage.isHidden = true
         
-        question = questionBank.questions[questionNumber - 1]
+        setupQuestionBank()
+        question = categoryQuestions[questionNumber - 1]
         emoji = question.emoji
         answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
         answer = question.answer
@@ -57,6 +60,21 @@ class GameViewController: UIViewController {
     }
     
     // 각종 함수들입니다
+    
+    func setupQuestionBank() {
+        if category == "KPOP" {
+            categoryQuestions = questionBank.kpopQuestions
+        }
+        else if category == "드라마" {
+            categoryQuestions = questionBank.dramaQuestions
+        }
+        else if category == "영화" {
+            categoryQuestions = questionBank.movieQuestions
+        }
+        else if category == "커스텀" {
+            categoryQuestions = questionBank.customQuestions
+        }
+    }
     
     func setupView() {
         backgroundImage.frame = UIScreen.main.bounds
@@ -80,7 +98,7 @@ class GameViewController: UIViewController {
         moneyButton.setTitle(" \(money)", for: .normal)
         moneyButton.sizeToFit()
         
-        question = questionBank.questions[questionNumber - 1]
+        question = categoryQuestions[questionNumber - 1]
         
         if favoriteList.contains(questionNumber) {
             isFavorite = true
@@ -173,7 +191,7 @@ class GameViewController: UIViewController {
     
     func updateAnswerPool() { // 테스트 해보아야 함
         answerPool.removeAll()
-        let answerPoolQuestionBank = questionBank.questions.filter({$0.length == answerLength})
+        let answerPoolQuestionBank = categoryQuestions.filter({$0.length == answerLength})
         for questions in answerPoolQuestionBank {
             answerPool += questions.answer
         }
