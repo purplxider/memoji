@@ -222,7 +222,7 @@ class GameViewController: UIViewController {
                 self.questionLabel.text = self.emoji
                 self.removeAll()
                 self.money = self.money + 10
-                UserDefaults.standard.set(self.money + 10, forKey: "money")
+                UserDefaults.standard.set(self.money, forKey: "money")
                 self.nextQuestion()
                 })
         }
