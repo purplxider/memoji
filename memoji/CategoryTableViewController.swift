@@ -10,7 +10,7 @@ import UIKit
 
 class CategoryTableViewController: UITableViewController {
     
-    let categories = ["KPOP", "드라마", "영화"] // 수정
+    let categories = ["KPOP", "드라마", "영화", "커스텀"] // 수정
     var money = UserDefaults.standard.integer(forKey: "money")
     let moneyButton = UIButton(type: .system)
     var category: String!
@@ -167,6 +167,27 @@ class CategoryTableViewController: UITableViewController {
             gameVC.category = category
         }
         
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if let cell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as? UITableViewCell {
+            category = (cell.textLabel?.text)!
+        }
+        
+        
+        if category != "커스텀" {
+            return true
+        } else if let data = UserDefaults.standard.data(forKey: "custom") {
+            return true
+        } else {
+            let alert = UIAlertController(title: "커스텀 문제가 없습니다", message: nil, preferredStyle: .alert)
+            let dismiss = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alert.addAction(dismiss)
+            
+            self.present(alert, animated: true)
+            
+            return false
+        }
     }
     
 

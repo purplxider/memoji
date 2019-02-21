@@ -78,8 +78,9 @@ class GameViewController: UIViewController {
         }
         else if category == "커스텀" {
             let data = UserDefaults.standard.data(forKey: "custom")
-            let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
-            categoryQuestions = questions
+            if let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as? [Question] {
+                categoryQuestions = questions
+            }
         }
     }
     
