@@ -9,7 +9,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Favorite Table View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="k4a-S8-acm">
+            <objects>
+                <navigationController storyboardIdentifier="FavoriteNavigation" id="TVx-Gh-HEg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tuY-M9-iug">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Enb-ye-d5z" kind="relationship" relationship="rootViewController" id="uyI-8k-GeK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i9e-zD-WEN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-954" y="95"/>
+        </scene>
+        <!--좋아한 문제-->
         <scene sceneID="Faa-0R-GK3">
             <objects>
                 <tableViewController storyboardIdentifier="Favorite" id="Enb-ye-d5z" customClass="FavoriteTableViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
@@ -48,6 +64,16 @@
                             <outlet property="delegate" destination="Enb-ye-d5z" id="nvO-by-kOr"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="좋아한 문제" id="CoH-lm-dx0">
+                        <barButtonItem key="rightBarButtonItem" title="확인" id="9eB-8S-r47">
+                            <connections>
+                                <action selector="dismissButton:" destination="Enb-ye-d5z" id="cqg-Q1-Y4n"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="okButton" destination="9eB-8S-r47" id="b69-E3-WQK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uRM-Ws-g17" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

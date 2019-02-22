@@ -22,11 +22,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UserDefaults.standard.object(forKey: "questionNumber") == nil {
             UserDefaults.standard.set(1, forKey: "questionNumber")
         }
-        if UserDefaults.standard.object(forKey: "favorite") == nil {
-            UserDefaults.standard.set([Int](), forKey: "favorite")
+        if UserDefaults.standard.object(forKey: "kpopFavorite") == nil {
+            UserDefaults.standard.set([Int](), forKey: "kpopFavorite")
         }
-        if UserDefaults.standard.object(forKey: "solved") == nil {
-            UserDefaults.standard.set([Int](), forKey: "solved")
+        if UserDefaults.standard.object(forKey: "dramaFavorite") == nil {
+            UserDefaults.standard.set([Int](), forKey: "dramaFavorite")
+        }
+        if UserDefaults.standard.object(forKey: "movieFavorite") == nil {
+            UserDefaults.standard.set([Int](), forKey: "movieFavorite")
+        }
+        if UserDefaults.standard.object(forKey: "customFavorite") == nil {
+            UserDefaults.standard.set([Int](), forKey: "customFavorite")
+        }
+        if UserDefaults.standard.object(forKey: "kpopSolved") == nil {
+            UserDefaults.standard.set([Int](), forKey: "kpopSolved")
+        }
+        if UserDefaults.standard.object(forKey: "dramaSolved") == nil {
+            UserDefaults.standard.set([Int](), forKey: "dramaSolved")
+        }
+        if UserDefaults.standard.object(forKey: "movieSolved") == nil {
+            UserDefaults.standard.set([Int](), forKey: "movieSolved")
+        }
+        if UserDefaults.standard.object(forKey: "customSolved") == nil {
+            UserDefaults.standard.set([Int](), forKey: "customSolved")
         }
         if UserDefaults.standard.object(forKey: "kpop") == nil {
             var questions = [Question]()

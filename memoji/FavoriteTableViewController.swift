@@ -10,13 +10,20 @@ import UIKit
 
 class FavoriteTableViewController: UITableViewController {
     
-    var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [Int]
-    var questionBank = [Question]()
-    var favoriteQuestionBank = [Int:Question]()
-
+    var favoriteList = [Question]()
+    var kpopQuestionBank = [Question]()
+    var dramaQuestionBank = [Question]()
+    var movieQuestionBank = [Question]()
+    var customQuestionBank = [Question]()
+    var favoriteQuestionEmoji = [String]()
+    var favoriteQuestionAnswer = [String]()
+    @IBOutlet weak var okButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupQuestionBank()
+        setupFavorites()
         setupTableView()
 
         // Uncomment the following line to preserve selection between presentations
@@ -35,29 +42,111 @@ class FavoriteTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return favoriteList.count
+        return favoriteQuestionEmoji.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteCell", for: indexPath)
         
-        for i in favoriteList {
-            favoriteQuestionBank[i] = questionBank[i]
-        }
+        cell.backgroundColor = .clear
         
-        let favoriteQuestionNumbers = Array(favoriteQuestionBank.keys)
-        let favoriteQuestions = Array(favoriteQuestionBank.values)
-        var answer = String()
-        
-        for answerKeys in favoriteQuestions[indexPath.row].answer {
-            answer.append(answerKeys)
-        }
-        
-        cell.textLabel?.text = "#\(favoriteQuestionNumbers[indexPath.row])"
-        cell.detailTextLabel?.text = "\(favoriteQuestions[indexPath.row].emoji)"
+        cell.textLabel?.text = favoriteQuestionEmoji[indexPath.row]
+        cell.detailTextLabel?.text = favoriteQuestionAnswer[indexPath.row]
 
         return cell
+    }
+    
+    func setupQuestionBank() {
+        let kpopData = UserDefaults.standard.data(forKey: "kpop")
+        let dramaData = UserDefaults.standard.data(forKey: "drama")
+        let movieData = UserDefaults.standard.data(forKey: "movie")
+        let customData = UserDefaults.standard.data(forKey: "custom")
+        
+        if let kpopQuestions = NSKeyedUnarchiver.unarchiveObject(with: kpopData!) as? [Question] {
+            kpopQuestionBank += kpopQuestions
+        }
+        if let dramaQuestions = NSKeyedUnarchiver.unarchiveObject(with: dramaData!) as? [Question] {
+            dramaQuestionBank += dramaQuestions
+        }
+        if let movieQuestions = NSKeyedUnarchiver.unarchiveObject(with: movieData!) as? [Question] {
+            movieQuestionBank += movieQuestions
+        }
+        if let customQuestions = NSKeyedUnarchiver.unarchiveObject(with: customData!) as? [Question] {
+            customQuestionBank += customQuestions
+        }
+    }
+    
+    func setupFavorites() {
+        if let kpopFavorite = UserDefaults.standard.array(forKey: "kpopFavorite") as? [Int] {
+            for i in kpopFavorite {
+                favoriteQuestionEmoji.append(kpopQuestionBank[i-1].emoji)
+                
+                var answer = ""
+                
+                
+                if let kpopSolved = UserDefaults.standard.array(forKey: "kpopSolved") as? [Int] {
+                    if kpopSolved.contains(i) {
+                        for j in kpopQuestionBank[i-1].answer {
+                            answer += j
+                        }
+                    }
+                }
+                
+                favoriteQuestionAnswer.append(answer)
+            }
+        }
+        if let dramaFavorite = UserDefaults.standard.array(forKey: "dramaFavorite") as? [Int] {
+            for i in dramaFavorite {
+                favoriteQuestionEmoji.append(dramaQuestionBank[i-1].emoji)
+                
+                var answer = ""
+                
+                if let dramaSolved = UserDefaults.standard.array(forKey: "dramaSolved") as? [Int] {
+                    if dramaSolved.contains(i) {
+                        for j in dramaQuestionBank[i-1].answer {
+                            answer += j
+                        }
+                    }
+                }
+                
+                favoriteQuestionAnswer.append(answer)
+            }
+        }
+        if let movieFavorite = UserDefaults.standard.array(forKey: "movieFavorite") as? [Int] {
+            for i in movieFavorite {
+                favoriteQuestionEmoji.append(movieQuestionBank[i-1].emoji)
+                
+                var answer = ""
+                
+                if let movieSolved = UserDefaults.standard.array(forKey: "movieSolved") as? [Int] {
+                    if movieSolved.contains(i) {
+                        for j in movieQuestionBank[i-1].answer {
+                            answer += j
+                        }
+                    }
+                }
+                
+                favoriteQuestionAnswer.append(answer)
+            }
+        }
+        if let customFavorite = UserDefaults.standard.array(forKey: "customFavorite") as? [Int] {
+            for i in customFavorite {
+                favoriteQuestionEmoji.append(customQuestionBank[i-1].emoji)
+                
+                var answer = ""
+                
+                if let customSolved = UserDefaults.standard.array(forKey: "customSolved") as? [Int] {
+                    if customSolved.contains(i) {
+                        for j in customQuestionBank[i-1].answer {
+                            answer += j
+                        }
+                    }
+                }
+                
+                favoriteQuestionAnswer.append(answer)
+            }
+        }
     }
     
     func setupTableView() {
@@ -66,7 +155,10 @@ class FavoriteTableViewController: UITableViewController {
         tableView.backgroundView = UIImageView(image: UIImage(named: "background.png"))
         tableView.backgroundColor = .clear
     }
-
+    @IBAction func dismissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

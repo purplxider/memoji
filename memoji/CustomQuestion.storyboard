@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Custom Question View Controller-->
+        <!--커스텀 문제 추가-->
         <scene sceneID="yXX-jk-yQM">
             <objects>
                 <viewController storyboardIdentifier="CustomQuestion" id="m50-lc-KDF" customClass="CustomQuestionViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
@@ -54,7 +54,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="7SD-7r-fhy"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Sz5-nx-kSa">
+                    <navigationItem key="navigationItem" title="커스텀 문제 추가" id="Sz5-nx-kSa">
                         <barButtonItem key="leftBarButtonItem" title="취소" id="6cu-QA-co1">
                             <connections>
                                 <action selector="cancelQuestion:" destination="m50-lc-KDF" id="Vnm-ez-B1K"/>

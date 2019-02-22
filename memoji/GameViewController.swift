@@ -22,8 +22,8 @@ class GameViewController: UIViewController {
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
     let moneyButton = UIButton(type: .system)
-    var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [Int]
-    var solvedList = UserDefaults.standard.array(forKey: "solved") as! [Int]
+    var favoriteList = [Int]()
+    var solvedList = [Int]()
     var isFavorite = false
     var isSolved = false
     
@@ -65,21 +65,33 @@ class GameViewController: UIViewController {
             let data = UserDefaults.standard.data(forKey: "kpop")
             let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
             categoryQuestions = questions
+            
+            favoriteList = UserDefaults.standard.array(forKey: "kpopFavorite") as! [Int]
+            solvedList = UserDefaults.standard.array(forKey: "kpopSolved") as! [Int]
         }
         else if category == "드라마" {
             let data = UserDefaults.standard.data(forKey: "drama")
             let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
             categoryQuestions = questions
+            
+            favoriteList = UserDefaults.standard.array(forKey: "dramaFavorite") as! [Int]
+            solvedList = UserDefaults.standard.array(forKey: "dramaSolved") as! [Int]
         }
         else if category == "영화" {
             let data = UserDefaults.standard.data(forKey: "movie")
             let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
             categoryQuestions = questions
+            
+            favoriteList = UserDefaults.standard.array(forKey: "movieFavorite") as! [Int]
+            solvedList = UserDefaults.standard.array(forKey: "movieSolved") as! [Int]
         }
         else if category == "커스텀" {
             let data = UserDefaults.standard.data(forKey: "custom")
             if let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as? [Question] {
                 categoryQuestions = questions
+                
+                favoriteList = UserDefaults.standard.array(forKey: "customFavorite") as! [Int]
+                solvedList = UserDefaults.standard.array(forKey: "customSolved") as! [Int]
             }
         }
     }
@@ -231,6 +243,10 @@ class GameViewController: UIViewController {
                 self.removeAll()
                 self.money = self.money + 10
                 UserDefaults.standard.set(self.money, forKey: "money")
+                
+                self.solvedList.append(self.questionNumber)
+                self.saveSolved()
+                
                 self.nextQuestion()
                 })
         }
@@ -346,14 +362,40 @@ class GameViewController: UIViewController {
         if isFavorite {
             favoriteButton.image = UIImage(named: "filledHeart.png")
             favoriteList.append(questionNumber)
-            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+            saveFavorite()
+            
             print(favoriteList)
         }
         else {
             favoriteButton.image = UIImage(named: "unfilledHeart.png")
             favoriteList = favoriteList.filter({$0 != questionNumber})
-            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+            saveFavorite()
+            
             print(favoriteList)
+        }
+    }
+    
+    func saveFavorite() {
+        if category == "KPOP" {
+            UserDefaults.standard.set(favoriteList, forKey: "kpopFavorite")
+        } else if category == "드라마" {
+            UserDefaults.standard.set(favoriteList, forKey: "dramaFavorite")
+        } else if category == "영화" {
+            UserDefaults.standard.set(favoriteList, forKey: "movieFavorite")
+        } else if category == "커스텀" {
+            UserDefaults.standard.set(favoriteList, forKey: "customFavorite")
+        }
+    }
+    
+    func saveSolved() {
+        if category == "KPOP" {
+            UserDefaults.standard.set(favoriteList, forKey: "kpopSolved")
+        } else if category == "드라마" {
+            UserDefaults.standard.set(favoriteList, forKey: "dramaSolved")
+        } else if category == "영화" {
+            UserDefaults.standard.set(favoriteList, forKey: "movieSolved")
+        } else if category == "커스텀" {
+            UserDefaults.standard.set(favoriteList, forKey: "customSolved")
         }
     }
 
