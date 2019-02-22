@@ -17,10 +17,13 @@ class FavoriteTableViewController: UITableViewController {
     var customQuestionBank = [Question]()
     @IBOutlet weak var okButton: UIBarButtonItem!
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupQuestionBank()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupQuestionBank()
         setupTableView()
 
         // Uncomment the following line to preserve selection between presentations
@@ -44,6 +47,7 @@ class FavoriteTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
         var categoryKey = Array(favoritesByCategory.keys).sorted(by: {$0 < $1})[section]
         if categoryKey == "kpop" {
             categoryKey = "KPOP"
@@ -63,62 +67,48 @@ class FavoriteTableViewController: UITableViewController {
         
         cell.backgroundColor = .clear
         
+        var favoritesByOrderedCategory = [[String:[Question]]]()
+        favoritesByCategory.sorted(by: {$0.key < $1.key}).forEach {
+            favoritesByOrderedCategory.append([$0.key : $0.value])
+        }
         let categoryKey = Array(favoritesByCategory.keys).sorted(by: {$0 < $1})[indexPath.section]
-        let categoryValue = Array(favoritesByCategory.values)[indexPath.section]
-        let emojis = categoryValue.map({$0.emoji})
+        let categoryValue = Array(favoritesByOrderedCategory[indexPath.section].values)
+        var emojis = categoryValue[0].map({$0.emoji})
         
         var answers = [String]()
         var answer = ""
         
         if categoryKey == "kpop" {
-            if let kpopFavorite = UserDefaults.standard.array(forKey: "kpopFavorite") as? [Int] {
-                for i in kpopFavorite {
-                    if let kpopSolved = UserDefaults.standard.array(forKey: "kpopSolved") as? [Int] {
-                        if kpopSolved.contains(i) {
-                            for j in kpopQuestionBank[i-1].answer {
-                                answer += j
-                            }
-                        }
-                    }
-                    answers.append(answer)
+            for i in kpopQuestionBank {
+                for j in i.answer {
+                    answer += j
                 }
+                answers.append(answer)
             }
-        } else if categoryKey == "drama" {
-            if let dramaFavorite = UserDefaults.standard.array(forKey: "dramaFavorite") as? [Int] {
-                for i in dramaFavorite {
-                    if let dramaSolved = UserDefaults.standard.array(forKey: "dramaSolved") as? [Int] {
-                        if dramaSolved.contains(i) {
-                            for j in dramaQuestionBank[i-1].answer {
-                                answer += j
-                            }
-                        }
-                    }
-                    answers.append(answer)
+        }
+        
+        if categoryKey == "drama" {
+            for i in dramaQuestionBank {
+                for j in i.answer {
+                    answer += j
                 }
+                answers.append(answer)
             }
-        } else if categoryKey == "movie" {
-            if let movieFavorite = UserDefaults.standard.array(forKey: "movieFavorite") as? [Int] {
-                for i in movieFavorite {
-                    if let movieSolved = UserDefaults.standard.array(forKey: "movieSolved") as? [Int] {
-                        if movieSolved.contains(i) {
-                            for j in movieQuestionBank[i-1].answer {
-                                answer += j
-                            }
-                        }
-                    }
-                    answers.append(answer)
+        }
+        
+        if categoryKey == "movie" {
+            for i in movieQuestionBank {
+                for j in i.answer {
+                    answer += j
                 }
+                answers.append(answer)
             }
-        } else if categoryKey == "custom" {
-            if let customFavorite = UserDefaults.standard.array(forKey: "customFavorite") as? [Int] {
-                for i in customFavorite {
-                    if let customSolved = UserDefaults.standard.array(forKey: "customSolved") as? [Int] {
-                        if customSolved.contains(i) {
-                            for j in customQuestionBank[i-1].answer {
-                                answer += j
-                            }
-                        }
-                    }
+        }
+        
+        if categoryKey == "custom" {
+            for i in customQuestionBank {
+                for j in i.answer {
+                    answer += j
                 }
                 answers.append(answer)
             }
@@ -137,20 +127,36 @@ class FavoriteTableViewController: UITableViewController {
         let customData = UserDefaults.standard.data(forKey: "custom")
         
         if let kpopQuestions = NSKeyedUnarchiver.unarchiveObject(with: kpopData!) as? [Question] {
-            kpopQuestionBank += kpopQuestions
-            favoritesByCategory["kpop"] = kpopQuestions
+            if let kpopFavorite = UserDefaults.standard.array(forKey: "kpopFavorite") as? [Int] {
+                for i in kpopFavorite {
+                    kpopQuestionBank.append(kpopQuestions[i-1])
+                }
+            }
+            favoritesByCategory["kpop"] = kpopQuestionBank
         }
         if let dramaQuestions = NSKeyedUnarchiver.unarchiveObject(with: dramaData!) as? [Question] {
-            dramaQuestionBank += dramaQuestions
-            favoritesByCategory["drama"] = dramaQuestions
+            if let dramaFavorite = UserDefaults.standard.array(forKey: "dramaFavorite") as? [Int] {
+                for i in dramaFavorite {
+                    dramaQuestionBank.append(dramaQuestions[i-1])
+                }
+            }
+            favoritesByCategory["drama"] = dramaQuestionBank
         }
         if let movieQuestions = NSKeyedUnarchiver.unarchiveObject(with: movieData!) as? [Question] {
-            movieQuestionBank += movieQuestions
-            favoritesByCategory["movie"] = movieQuestions
+            if let movieFavorite = UserDefaults.standard.array(forKey: "movieFavorite") as? [Int] {
+                for i in movieFavorite {
+                    movieQuestionBank.append(movieQuestions[i-1])
+                }
+            }
+            favoritesByCategory["movie"] = movieQuestionBank
         }
         if let customQuestions = NSKeyedUnarchiver.unarchiveObject(with: customData!) as? [Question] {
-            customQuestionBank += customQuestions
-            favoritesByCategory["custom"] = customQuestions
+            if let customFavorite = UserDefaults.standard.array(forKey: "customFavorite") as? [Int] {
+                for i in customFavorite {
+                    customQuestionBank.append(customQuestions[i-1])
+                }
+            }
+            favoritesByCategory["custom"] = customQuestionBank
         }
     }
     

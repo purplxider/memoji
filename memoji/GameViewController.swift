@@ -389,13 +389,13 @@ class GameViewController: UIViewController {
     
     func saveSolved() {
         if category == "KPOP" {
-            UserDefaults.standard.set(favoriteList, forKey: "kpopSolved")
+            UserDefaults.standard.set(solvedList, forKey: "kpopSolved")
         } else if category == "드라마" {
-            UserDefaults.standard.set(favoriteList, forKey: "dramaSolved")
+            UserDefaults.standard.set(solvedList, forKey: "dramaSolved")
         } else if category == "영화" {
-            UserDefaults.standard.set(favoriteList, forKey: "movieSolved")
+            UserDefaults.standard.set(solvedList, forKey: "movieSolved")
         } else if category == "커스텀" {
-            UserDefaults.standard.set(favoriteList, forKey: "customSolved")
+            UserDefaults.standard.set(solvedList, forKey: "customSolved")
         }
     }
 
