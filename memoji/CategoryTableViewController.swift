@@ -82,8 +82,8 @@ class CategoryTableViewController: UITableViewController {
         navigationController?.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
         navigationController?.toolbar.clipsToBounds = true
         navigationController?.toolbar.tintColor = UIColor(red: 228/255.0, green: 175/255.0, blue: 10/255.0, alpha: 1.0)
-        let plus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addQuestion)) // 수정
-        let favorite = UIBarButtonItem(image: UIImage(named: "filledHeart.png"), style: .plain, target: self, action: nil) // 수정
+        let plus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addQuestion))
+        let favorite = UIBarButtonItem(image: UIImage(named: "filledHeart.png"), style: .plain, target: self, action: #selector(seeFavorites)) // 수정
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         var items = [UIBarButtonItem]()
         items.append(plus)
@@ -109,9 +109,16 @@ class CategoryTableViewController: UITableViewController {
     
     @objc func addQuestion() {
         let storyboard = UIStoryboard(name: "CustomQuestion", bundle: nil)
-        let addVC = storyboard.instantiateViewController(withIdentifier: "CustomQuestion") as! CustomQuestionViewController
+        let addVC = storyboard.instantiateViewController(withIdentifier: "CustomNavigation") as! UINavigationController
         
         present(addVC, animated: true, completion: nil)
+    }
+    
+    @objc func seeFavorites() {
+        let storyboard = UIStoryboard(name: "Favorite", bundle: nil)
+        let favoriteVC = storyboard.instantiateViewController(withIdentifier: "FavoriteNavigation") as! UINavigationController
+        
+        present(favoriteVC, animated: true, completion: nil)
     }
 
     /*
