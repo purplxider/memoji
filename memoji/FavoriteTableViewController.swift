@@ -10,14 +10,11 @@ import UIKit
 
 class FavoriteTableViewController: UITableViewController {
     
-    var favoriteList = [Question]()
     var favoritesByCategory = [String:[Question]]()
     var kpopQuestionBank = [Question]()
     var dramaQuestionBank = [Question]()
     var movieQuestionBank = [Question]()
     var customQuestionBank = [Question]()
-    var favoriteQuestionEmoji = [String]()
-    var favoriteQuestionAnswer = [String]()
     @IBOutlet weak var okButton: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -76,8 +73,6 @@ class FavoriteTableViewController: UITableViewController {
         if categoryKey == "kpop" {
             if let kpopFavorite = UserDefaults.standard.array(forKey: "kpopFavorite") as? [Int] {
                 for i in kpopFavorite {
-                    favoriteQuestionEmoji.append(kpopQuestionBank[i-1].emoji)
-                    
                     if let kpopSolved = UserDefaults.standard.array(forKey: "kpopSolved") as? [Int] {
                         if kpopSolved.contains(i) {
                             for j in kpopQuestionBank[i-1].answer {
@@ -91,8 +86,6 @@ class FavoriteTableViewController: UITableViewController {
         } else if categoryKey == "drama" {
             if let dramaFavorite = UserDefaults.standard.array(forKey: "dramaFavorite") as? [Int] {
                 for i in dramaFavorite {
-                    favoriteQuestionEmoji.append(dramaQuestionBank[i-1].emoji)
-                    
                     if let dramaSolved = UserDefaults.standard.array(forKey: "dramaSolved") as? [Int] {
                         if dramaSolved.contains(i) {
                             for j in dramaQuestionBank[i-1].answer {
@@ -106,8 +99,6 @@ class FavoriteTableViewController: UITableViewController {
         } else if categoryKey == "movie" {
             if let movieFavorite = UserDefaults.standard.array(forKey: "movieFavorite") as? [Int] {
                 for i in movieFavorite {
-                    favoriteQuestionEmoji.append(movieQuestionBank[i-1].emoji)
-                    
                     if let movieSolved = UserDefaults.standard.array(forKey: "movieSolved") as? [Int] {
                         if movieSolved.contains(i) {
                             for j in movieQuestionBank[i-1].answer {
@@ -121,8 +112,6 @@ class FavoriteTableViewController: UITableViewController {
         } else if categoryKey == "custom" {
             if let customFavorite = UserDefaults.standard.array(forKey: "customFavorite") as? [Int] {
                 for i in customFavorite {
-                    favoriteQuestionEmoji.append(customQuestionBank[i-1].emoji)
-                    
                     if let customSolved = UserDefaults.standard.array(forKey: "customSolved") as? [Int] {
                         if customSolved.contains(i) {
                             for j in customQuestionBank[i-1].answer {
