@@ -49,17 +49,19 @@ class FavoriteTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         var categoryKey = Array(favoritesByCategory.keys).sorted(by: {$0 < $1})[section]
+        var title = ""
+        
         if categoryKey == "kpop" {
-            categoryKey = "KPOP"
+            title = "KPOP"
         } else if categoryKey == "drama" {
-            categoryKey = "드라마"
+            title = "드라마"
         } else if categoryKey == "movie" {
-            categoryKey = "영화"
+            title = "영화"
         } else if categoryKey == "custom" {
-            categoryKey = "커스텀"
+            title = "커스텀"
         }
         
-        return categoryKey
+        return title
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,96 +69,104 @@ class FavoriteTableViewController: UITableViewController {
         
         cell.backgroundColor = .clear
         
-        var favoritesByOrderedCategory = [[String:[Question]]]()
-        favoritesByCategory.sorted(by: {$0.key < $1.key}).forEach {
-            favoritesByOrderedCategory.append([$0.key : $0.value])
-        }
         let categoryKey = Array(favoritesByCategory.keys).sorted(by: {$0 < $1})[indexPath.section]
-        let categoryValue = Array(favoritesByOrderedCategory[indexPath.section].values)
-        var emojis = categoryValue[0].map({$0.emoji})
+        print(categoryKey)
+        if let categoryValue = favoritesByCategory[categoryKey] {
+            let emojis = categoryValue.map({$0.emoji})
+            print(emojis)
+            if !emojis.isEmpty {
+                cell.textLabel?.text = emojis[indexPath.row]
+            } else {
+                tableView.reloadData()
+            }
+        }
         
+        var answers = setupAnswer(categoryKey: categoryKey)
+
+        cell.detailTextLabel?.text = answers[indexPath.row]
+
+        return cell
+    }
+    
+    func setupAnswer(categoryKey:String) -> [String] {
         var answers = [String]()
         var answer = ""
         
         if categoryKey == "kpop" {
             for i in kpopQuestionBank {
-                for j in i.answer {
-                    answer += j
+                if i.isSolved {
+                    for j in i.answer {
+                        answer += j
+                    }
+                    answers.append(answer)
                 }
-                answers.append(answer)
             }
         }
         
         if categoryKey == "drama" {
             for i in dramaQuestionBank {
-                for j in i.answer {
-                    answer += j
+                if i.isSolved {
+                    for j in i.answer {
+                        answer += j
+                    }
+                    answers.append(answer)
                 }
-                answers.append(answer)
             }
         }
         
         if categoryKey == "movie" {
             for i in movieQuestionBank {
-                for j in i.answer {
-                    answer += j
+                if i.isSolved {
+                    for j in i.answer {
+                        answer += j
+                    }
+                    answers.append(answer)
                 }
-                answers.append(answer)
             }
         }
         
         if categoryKey == "custom" {
             for i in customQuestionBank {
-                for j in i.answer {
-                    answer += j
+                if i.isSolved {
+                    for j in i.answer {
+                        answer += j
+                    }
+                    answers.append(answer)
                 }
-                answers.append(answer)
             }
         }
-        
-        cell.textLabel?.text = emojis[indexPath.row]
-        cell.detailTextLabel?.text = answers[indexPath.row]
 
-        return cell
+        if answers.count == 0 {answers.append("")}
+        return answers
     }
     
     func setupQuestionBank() {
         let kpopData = UserDefaults.standard.data(forKey: "kpop")
         let dramaData = UserDefaults.standard.data(forKey: "drama")
         let movieData = UserDefaults.standard.data(forKey: "movie")
-        let customData = UserDefaults.standard.data(forKey: "custom")
         
         if let kpopQuestions = NSKeyedUnarchiver.unarchiveObject(with: kpopData!) as? [Question] {
-            if let kpopFavorite = UserDefaults.standard.array(forKey: "kpopFavorite") as? [Int] {
-                for i in kpopFavorite {
-                    kpopQuestionBank.append(kpopQuestions[i-1])
-                }
-            }
+            kpopQuestionBank = kpopQuestions
+            kpopQuestionBank = kpopQuestionBank.filter({$0.isFavorite})
             favoritesByCategory["kpop"] = kpopQuestionBank
         }
         if let dramaQuestions = NSKeyedUnarchiver.unarchiveObject(with: dramaData!) as? [Question] {
-            if let dramaFavorite = UserDefaults.standard.array(forKey: "dramaFavorite") as? [Int] {
-                for i in dramaFavorite {
-                    dramaQuestionBank.append(dramaQuestions[i-1])
-                }
-            }
+            dramaQuestionBank = dramaQuestions
+            dramaQuestionBank = dramaQuestionBank.filter({$0.isFavorite})
             favoritesByCategory["drama"] = dramaQuestionBank
         }
         if let movieQuestions = NSKeyedUnarchiver.unarchiveObject(with: movieData!) as? [Question] {
-            if let movieFavorite = UserDefaults.standard.array(forKey: "movieFavorite") as? [Int] {
-                for i in movieFavorite {
-                    movieQuestionBank.append(movieQuestions[i-1])
-                }
-            }
+            movieQuestionBank = movieQuestions
+            movieQuestionBank = movieQuestionBank.filter({$0.isFavorite})
             favoritesByCategory["movie"] = movieQuestionBank
         }
-        if let customQuestions = NSKeyedUnarchiver.unarchiveObject(with: customData!) as? [Question] {
-            if let customFavorite = UserDefaults.standard.array(forKey: "customFavorite") as? [Int] {
-                for i in customFavorite {
-                    customQuestionBank.append(customQuestions[i-1])
-                }
+        
+        if let customData = UserDefaults.standard.data(forKey: "custom") {
+            if let customQuestions = NSKeyedUnarchiver.unarchiveObject(with: customData) as? [Question] {
+                customQuestionBank = customQuestions
+                customQuestionBank = customQuestionBank.filter({$0.isFavorite})
+                favoritesByCategory["custom"] = customQuestionBank
             }
-            favoritesByCategory["custom"] = customQuestionBank
         }
     }
     

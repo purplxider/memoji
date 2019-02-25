@@ -22,8 +22,6 @@ class GameViewController: UIViewController {
     var money = UserDefaults.standard.integer(forKey: "money")
     var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
     let moneyButton = UIButton(type: .system)
-    var favoriteList = [Int]()
-    var solvedList = [Int]()
     var isFavorite = false
     var isSolved = false
     
@@ -41,11 +39,7 @@ class GameViewController: UIViewController {
         memoImage.isHidden = true
         
         setupQuestionBank()
-        question = categoryQuestions[questionNumber - 1]
-        emoji = question.emoji
-        answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
-        answer = question.answer
-        answerLength = question.length
+        setupCurrentQuestion()
         
         // 화면 구성 셋업
         setupView()
@@ -65,35 +59,33 @@ class GameViewController: UIViewController {
             let data = UserDefaults.standard.data(forKey: "kpop")
             let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
             categoryQuestions = questions
-            
-            favoriteList = UserDefaults.standard.array(forKey: "kpopFavorite") as! [Int]
-            solvedList = UserDefaults.standard.array(forKey: "kpopSolved") as! [Int]
         }
         else if category == "드라마" {
             let data = UserDefaults.standard.data(forKey: "drama")
             let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
             categoryQuestions = questions
-            
-            favoriteList = UserDefaults.standard.array(forKey: "dramaFavorite") as! [Int]
-            solvedList = UserDefaults.standard.array(forKey: "dramaSolved") as! [Int]
         }
         else if category == "영화" {
             let data = UserDefaults.standard.data(forKey: "movie")
             let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as! [Question]
             categoryQuestions = questions
-            
-            favoriteList = UserDefaults.standard.array(forKey: "movieFavorite") as! [Int]
-            solvedList = UserDefaults.standard.array(forKey: "movieSolved") as! [Int]
         }
         else if category == "커스텀" {
             let data = UserDefaults.standard.data(forKey: "custom")
             if let questions = NSKeyedUnarchiver.unarchiveObject(with: data!) as? [Question] {
                 categoryQuestions = questions
-                
-                favoriteList = UserDefaults.standard.array(forKey: "customFavorite") as! [Int]
-                solvedList = UserDefaults.standard.array(forKey: "customSolved") as! [Int]
             }
         }
+    }
+    
+    func setupCurrentQuestion() {
+        question = categoryQuestions[questionNumber - 1]
+        emoji = question.emoji
+        answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
+        answer = question.answer
+        answerLength = question.length
+        isFavorite = question.isFavorite
+        isSolved = question.isSolved
     }
     
     func setupView() {
@@ -102,13 +94,6 @@ class GameViewController: UIViewController {
         backgroundImage.image = UIImage(named: "background.png")
         memoImage.image = UIImage(named: "memo.png")
         navigationItem.title = "#\(questionNumber)" // 수정
-        
-        if favoriteList.contains(questionNumber) {
-            isFavorite = true
-        }
-        if solvedList.contains(questionNumber) {
-            isSolved = true
-        }
     }
     
     func nextQuestion() { // 수정
@@ -119,10 +104,6 @@ class GameViewController: UIViewController {
         moneyButton.sizeToFit()
         
         question = categoryQuestions[questionNumber - 1]
-        
-        if favoriteList.contains(questionNumber) {
-            isFavorite = true
-        }
     }
     
     func setupToolBar() {
@@ -244,7 +225,6 @@ class GameViewController: UIViewController {
                 self.money = self.money + 10
                 UserDefaults.standard.set(self.money, forKey: "money")
                 
-                self.solvedList.append(self.questionNumber)
                 self.saveSolved()
                 
                 self.nextQuestion()
@@ -361,41 +341,47 @@ class GameViewController: UIViewController {
         
         if isFavorite {
             favoriteButton.image = UIImage(named: "filledHeart.png")
-            favoriteList.append(questionNumber)
-            saveFavorite()
-            
-            print(favoriteList)
         }
         else {
             favoriteButton.image = UIImage(named: "unfilledHeart.png")
-            favoriteList = favoriteList.filter({$0 != questionNumber})
-            saveFavorite()
-            
-            print(favoriteList)
         }
+        
+        saveFavorite()
     }
     
     func saveFavorite() {
+        categoryQuestions = categoryQuestions.filter({$0 != question})
+        question.isFavorite = !question.isFavorite
+        categoryQuestions.insert(question, at: questionNumber - 1)
+        
+        let data = NSKeyedArchiver.archivedData(withRootObject: categoryQuestions)
+        
         if category == "KPOP" {
-            UserDefaults.standard.set(favoriteList, forKey: "kpopFavorite")
+            UserDefaults.standard.set(data, forKey: "kpop")
         } else if category == "드라마" {
-            UserDefaults.standard.set(favoriteList, forKey: "dramaFavorite")
+            UserDefaults.standard.set(data, forKey: "drama")
         } else if category == "영화" {
-            UserDefaults.standard.set(favoriteList, forKey: "movieFavorite")
+            UserDefaults.standard.set(data, forKey: "movie")
         } else if category == "커스텀" {
-            UserDefaults.standard.set(favoriteList, forKey: "customFavorite")
+            UserDefaults.standard.set(data, forKey: "custom")
         }
     }
     
     func saveSolved() {
+        categoryQuestions = categoryQuestions.filter({$0 != question})
+        question.isSolved = true
+        categoryQuestions.insert(question, at: questionNumber - 1)
+        
+        let data = NSKeyedArchiver.archivedData(withRootObject: categoryQuestions)
+        
         if category == "KPOP" {
-            UserDefaults.standard.set(solvedList, forKey: "kpopSolved")
+            UserDefaults.standard.set(data, forKey: "kpop")
         } else if category == "드라마" {
-            UserDefaults.standard.set(solvedList, forKey: "dramaSolved")
+            UserDefaults.standard.set(data, forKey: "drama")
         } else if category == "영화" {
-            UserDefaults.standard.set(solvedList, forKey: "movieSolved")
+            UserDefaults.standard.set(data, forKey: "movie")
         } else if category == "커스텀" {
-            UserDefaults.standard.set(solvedList, forKey: "customSolved")
+            UserDefaults.standard.set(data, forKey: "custom")
         }
     }
 
