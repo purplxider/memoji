@@ -20,7 +20,7 @@ class CustomQuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        setupNavigationBar()
         
         if let customData = UserDefaults.standard.object(forKey: "custom") as? Data {
             let customQuestions = NSKeyedUnarchiver.unarchiveObject(with: customData) as! [Question]
@@ -29,6 +29,15 @@ class CustomQuestionViewController: UIViewController {
         
         backgroundImage.image = UIImage(named: "background.png")
         // Do any additional setup after loading the view.
+    }
+    
+    func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.clipsToBounds = true
     }
     
     @IBAction func saveQuestion(_ sender: Any) {

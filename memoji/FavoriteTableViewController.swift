@@ -25,6 +25,7 @@ class FavoriteTableViewController: UITableViewController {
         super.viewDidLoad()
         
         setupTableView()
+        setupNavigationBar()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -62,6 +63,15 @@ class FavoriteTableViewController: UITableViewController {
         }
         
         return title
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerView = view as? UITableViewHeaderFooterView {
+            headerView.contentView.tintColor = .clear
+            headerView.backgroundColor = .clear
+            headerView.tintColor = .clear
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -182,6 +192,13 @@ class FavoriteTableViewController: UITableViewController {
     }
     @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func setupNavigationBar() {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.clipsToBounds = true
     }
     
     /*
