@@ -34,7 +34,7 @@
             </objects>
             <point key="canvasLocation" x="151" y="141"/>
         </scene>
-        <!--Memoji-->
+        <!--카테고리-->
         <scene sceneID="biB-LK-bfP">
             <objects>
                 <tableViewController storyboardIdentifier="Category" id="7Un-QE-6ey" customClass="CategoryTableViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
@@ -69,7 +69,7 @@
                             <outlet property="delegate" destination="7Un-QE-6ey" id="VCU-pO-R5q"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Memoji" id="C9e-VW-qXm"/>
+                    <navigationItem key="navigationItem" title="카테고리" id="C9e-VW-qXm"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FwC-4L-uOE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -143,7 +143,6 @@
             <objects>
                 <navigationController storyboardIdentifier="navigationController" id="x8W-3V-nPm" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CJ0-RJ-UGF">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.89411764709999997" green="0.68627450980000004" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">

@@ -48,16 +48,16 @@ class FavoriteTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
-        var categoryKey = Array(favoritesByCategory.keys).sorted(by: {$0 < $1})[section]
+        let categoryKey = Array(favoritesByCategory.keys).sorted(by: {$0 < $1})[section]
         var title = ""
         
-        if categoryKey == "kpop" {
+        if categoryKey == "1kpop" {
             title = "KPOP"
-        } else if categoryKey == "drama" {
+        } else if categoryKey == "2drama" {
             title = "드라마"
-        } else if categoryKey == "movie" {
+        } else if categoryKey == "3movie" {
             title = "영화"
-        } else if categoryKey == "custom" {
+        } else if categoryKey == "4custom" {
             title = "커스텀"
         }
         
@@ -70,14 +70,10 @@ class FavoriteTableViewController: UITableViewController {
         cell.backgroundColor = .clear
         
         let categoryKey = Array(favoritesByCategory.keys).sorted(by: {$0 < $1})[indexPath.section]
-        print(categoryKey)
         if let categoryValue = favoritesByCategory[categoryKey] {
             let emojis = categoryValue.map({$0.emoji})
-            print(emojis)
             if !emojis.isEmpty {
                 cell.textLabel?.text = emojis[indexPath.row]
-            } else {
-                tableView.reloadData()
             }
         }
         
@@ -92,7 +88,7 @@ class FavoriteTableViewController: UITableViewController {
         var answers = [String]()
         var answer = ""
         
-        if categoryKey == "kpop" {
+        if categoryKey == "1kpop" {
             for i in kpopQuestionBank {
                 if i.isSolved {
                     for j in i.answer {
@@ -103,7 +99,7 @@ class FavoriteTableViewController: UITableViewController {
             }
         }
         
-        if categoryKey == "drama" {
+        if categoryKey == "2drama" {
             for i in dramaQuestionBank {
                 if i.isSolved {
                     for j in i.answer {
@@ -114,7 +110,7 @@ class FavoriteTableViewController: UITableViewController {
             }
         }
         
-        if categoryKey == "movie" {
+        if categoryKey == "3movie" {
             for i in movieQuestionBank {
                 if i.isSolved {
                     for j in i.answer {
@@ -125,7 +121,7 @@ class FavoriteTableViewController: UITableViewController {
             }
         }
         
-        if categoryKey == "custom" {
+        if categoryKey == "4custom" {
             for i in customQuestionBank {
                 if i.isSolved {
                     for j in i.answer {
@@ -148,24 +144,32 @@ class FavoriteTableViewController: UITableViewController {
         if let kpopQuestions = NSKeyedUnarchiver.unarchiveObject(with: kpopData!) as? [Question] {
             kpopQuestionBank = kpopQuestions
             kpopQuestionBank = kpopQuestionBank.filter({$0.isFavorite})
-            favoritesByCategory["kpop"] = kpopQuestionBank
+            if !kpopQuestionBank.isEmpty {
+                favoritesByCategory["1kpop"] = kpopQuestionBank
+            }
         }
         if let dramaQuestions = NSKeyedUnarchiver.unarchiveObject(with: dramaData!) as? [Question] {
             dramaQuestionBank = dramaQuestions
             dramaQuestionBank = dramaQuestionBank.filter({$0.isFavorite})
-            favoritesByCategory["drama"] = dramaQuestionBank
+            if !dramaQuestionBank.isEmpty {
+                favoritesByCategory["2drama"] = dramaQuestionBank
+            }
         }
         if let movieQuestions = NSKeyedUnarchiver.unarchiveObject(with: movieData!) as? [Question] {
             movieQuestionBank = movieQuestions
             movieQuestionBank = movieQuestionBank.filter({$0.isFavorite})
-            favoritesByCategory["movie"] = movieQuestionBank
+            if !movieQuestionBank.isEmpty {
+                favoritesByCategory["3movie"] = movieQuestionBank
+            }
         }
         
         if let customData = UserDefaults.standard.data(forKey: "custom") {
             if let customQuestions = NSKeyedUnarchiver.unarchiveObject(with: customData) as? [Question] {
                 customQuestionBank = customQuestions
                 customQuestionBank = customQuestionBank.filter({$0.isFavorite})
-                favoritesByCategory["custom"] = customQuestionBank
+                if !customQuestionBank.isEmpty {
+                    favoritesByCategory["4custom"] = customQuestionBank
+                }
             }
         }
     }
