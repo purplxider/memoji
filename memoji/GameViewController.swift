@@ -85,7 +85,18 @@ class GameViewController: UIViewController {
         isFavorite = question.isFavorite
         isSolved = question.isSolved
         
+        for _ in 1...answerLength {
+            userAnswer.append("")
+        }
+        
         questionLabel.text = emoji
+        if emoji.count < 5 {
+            questionLabel.font = UIFont.systemFont(ofSize: 70)
+        } else if emoji.count < 7 {
+            questionLabel.font = UIFont.systemFont(ofSize: 50)
+        } else {
+            questionLabel.font = UIFont.systemFont(ofSize: 40)
+        }
     }
     
     func setupView() {
@@ -163,7 +174,12 @@ class GameViewController: UIViewController {
                 count = count + 1
             }
         } else {
-            let firstLineLength = answerLength / 2
+            var firstLineLength = answerLength / 2
+            if answer.contains(".") {
+                let toRemove = answer.firstIndex(of: ".")!
+                answer = answer.filter({$0 != "."})
+                firstLineLength = toRemove
+            }
             let firstFixedX = (Int(UIScreen.main.bounds.width) - 44 * firstLineLength) / (firstLineLength + 1)
             let secondLineLength = answerLength - firstLineLength
             let secondFixedX = (Int(UIScreen.main.bounds.width) - 44 * secondLineLength) / (secondLineLength + 1)
@@ -221,7 +237,7 @@ class GameViewController: UIViewController {
     }
     
     func removeAnswerBlock() {
-        for i in 100...(100 + answerLength) {
+        for i in 100...112 {
             if let answerButton = self.view.viewWithTag(i) as? UIButton {
                 answerButton.removeFromSuperview()
             }
@@ -238,7 +254,6 @@ class GameViewController: UIViewController {
             for _ in 0...6 {
                 button = UIButton(frame: CGRect(x: x, y: y, width: 32, height: 42))
                 button.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                //button.setTitle(answerPool[count], for: .normal) // 수정
                 button.setTitleColor(UIColor.black, for: .normal)
                 button.tag = count + 200
                 button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -258,22 +273,29 @@ class GameViewController: UIViewController {
         }
         
         updateAnswerPool() // 수정
-
     }
     
     func updateAnswerPool() { // 테스트 해보아야 함
         answerPool.removeAll()
-        let answerPoolQuestionBank = categoryQuestions.filter({$0.length == answerLength})
-        for questions in answerPoolQuestionBank {
-            answerPool += questions.answer
+        var answerPoolQuestionBank = categoryQuestions.filter({$0.length == answerLength})
+        answerPoolQuestionBank = answerPoolQuestionBank.shuffled()
+        let answersNeeded = 14 / answerLength
+        for i in 0...answersNeeded {
+            answerPool += answerPoolQuestionBank[i].answer
         }
         
         var temp = [String]()
+        let answerString = answer.filter({$0 != "."}).reduce("") {$0 + $1}
         for _ in 1...(14 - answerLength) {
-            temp.append(answerPool.randomElement()!)
+            if answerString.isAlphanumeric() {
+                temp.append(randomAlphabet())
+            } else {
+                temp.append(answerPool.randomElement()!)
+            }
         }
         answerPool = temp
         answerPool += answer
+        answerPool = answerPool.filter({$0 != "."})
         answerPool = answerPool.shuffled()
         
         for i in 200...(200+answerPool.count - 1) {
@@ -283,13 +305,18 @@ class GameViewController: UIViewController {
         }
     }
     
+    func randomAlphabet() -> String {
+        let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        return String((0...0).map{ _ in letters.randomElement()! })
+    }
+    
     func checkIfCorrect() {
         if userAnswer == answer {
             questionLabel.text = "정답"
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1200), execute: {
                 self.questionLabel.text = self.emoji
                 self.removeAll()
-                self.money = self.money + 10
+                self.money = self.money + 5
                 UserDefaults.standard.set(self.money, forKey: "money")
                 
                 self.saveSolved()
@@ -332,7 +359,8 @@ class GameViewController: UIViewController {
                     answerButton.setTitle(poolButton.titleLabel?.text, for: .normal)
                     poolButton.isHidden = true
                     hiddenButtonTag[answerButton.tag] = poolButton.tag
-                    let text = poolButton.titleLabel?.text as! String
+                    let text = poolButton.titleLabel?.text as? String ?? ""
+                    userAnswer.remove(at: answerButton.tag - 100)
                     userAnswer.insert(text, at: (answerButton.tag - 100))
                     checkIfCorrect()
                     print(userAnswer, answer)
@@ -349,10 +377,12 @@ class GameViewController: UIViewController {
             let key = answerButton.tag
             if let poolButtonTag = hiddenButtonTag[key] {
                 if let poolButton = self.view.viewWithTag(poolButtonTag) as? UIButton {
-                    userAnswer = userAnswer.filter({ $0 != answerButton.titleLabel?.text })
+                    userAnswer.remove(at: key - 100)
+                    userAnswer.insert("", at: key - 100)
                     answerButton.setTitle(" ", for: .normal)
                     poolButton.isHidden = false
                     hiddenButtonTag.removeValue(forKey: key)
+                    print(userAnswer)
                 }
             }
         }
@@ -371,6 +401,7 @@ class GameViewController: UIViewController {
                         if let answerButton = self.view.viewWithTag(i) as? UIButton {
                             if answerButton.titleLabel?.text == nil || answerButton.titleLabel?.text == " " {
                                 answerButton.setTitle(self.answer[answerButton.tag - 100], for: .normal)
+                                self.userAnswer.remove(at: answerButton.tag - 100)
                                 self.userAnswer.insert(self.answer[answerButton.tag - 100], at: (answerButton.tag - 100))
                                 for j in 200...(200+self.answerPool.count) {
                                     if let poolButton = self.view.viewWithTag(j) as? UIButton {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A5B13992227BF1B00738C64 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5B13982227BF1B00738C64 /* StringExtension.swift */; };
 		52224801221D1EF1009FA3DC /* CustomQuestion.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52224800221D1EF0009FA3DC /* CustomQuestion.storyboard */; };
 		52224803221D1FE5009FA3DC /* CustomQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52224802221D1FE5009FA3DC /* CustomQuestionViewController.swift */; };
 		523E79BD220BB770003EA7C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E79BC220BB770003EA7C7 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A5B13982227BF1B00738C64 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		52224800221D1EF0009FA3DC /* CustomQuestion.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomQuestion.storyboard; sourceTree = "<group>"; };
 		52224802221D1FE5009FA3DC /* CustomQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuestionViewController.swift; sourceTree = "<group>"; };
 		523E79B9220BB770003EA7C7 /* memoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = memoji.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +122,7 @@
 				52224800221D1EF0009FA3DC /* CustomQuestion.storyboard */,
 				52224802221D1FE5009FA3DC /* CustomQuestionViewController.swift */,
 				523E79EE220BD92F003EA7C7 /* GameViewController.swift */,
+				0A5B13982227BF1B00738C64 /* StringExtension.swift */,
 				523E79EC220BC3FE003EA7C7 /* CategoryTableViewController.swift */,
 				523E79EA220BBD8F003EA7C7 /* MainViewController.swift */,
 				523E79C3220BB772003EA7C7 /* Assets.xcassets */,
@@ -287,6 +290,7 @@
 				523E79EB220BBD8F003EA7C7 /* MainViewController.swift in Sources */,
 				52224803221D1FE5009FA3DC /* CustomQuestionViewController.swift in Sources */,
 				523E79BF220BB770003EA7C7 /* ViewController.swift in Sources */,
+				0A5B13992227BF1B00738C64 /* StringExtension.swift in Sources */,
 				523E79BD220BB770003EA7C7 /* AppDelegate.swift in Sources */,
 				523E79ED220BC3FE003EA7C7 /* CategoryTableViewController.swift in Sources */,
 				52C5AA03221BA61500C817C4 /* FavoriteTableViewController.swift in Sources */,
