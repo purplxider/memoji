@@ -93,14 +93,14 @@
                                 <items/>
                             </toolbar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fN7-Wz-zcr">
-                                <rect key="frame" x="50.5" y="130" width="274" height="149"/>
+                                <rect key="frame" x="50.5" y="108" width="274" height="149"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="149" id="1Yq-Yk-Nfw"/>
                                     <constraint firstAttribute="width" constant="274" id="1iY-4W-56G"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ggw-ba-0AZ">
-                                <rect key="frame" x="82.5" y="158" width="210.5" height="92"/>
+                                <rect key="frame" x="82.5" y="136" width="210.5" height="92"/>
                                 <fontDescription key="fontDescription" name="AppleColorEmoji" family="Apple Color Emoji" pointSize="70"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -117,12 +117,11 @@
                         <constraints>
                             <constraint firstItem="Ggw-ba-0AZ" firstAttribute="centerX" secondItem="zeW-xh-nro" secondAttribute="centerX" id="81O-RA-QNz"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="bottom" secondItem="zVO-1g-WM9" secondAttribute="bottom" id="RRr-vu-VCB"/>
+                            <constraint firstItem="Ggw-ba-0AZ" firstAttribute="centerY" secondItem="zeW-xh-nro" secondAttribute="centerY" constant="-151.5" id="SDO-Fx-mPg"/>
                             <constraint firstItem="fN7-Wz-zcr" firstAttribute="centerX" secondItem="zeW-xh-nro" secondAttribute="centerX" id="Szk-6O-hIs"/>
-                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="top" secondItem="zVO-1g-WM9" secondAttribute="top" constant="66" id="TGm-fW-zzo"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="trailing" secondItem="zVO-1g-WM9" secondAttribute="trailing" id="kWI-nx-NeL"/>
-                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="centerY" secondItem="zeW-xh-nro" secondAttribute="centerY" constant="-129" id="rOr-ou-oyJ"/>
+                            <constraint firstItem="fN7-Wz-zcr" firstAttribute="centerY" secondItem="zeW-xh-nro" secondAttribute="centerY" constant="-151" id="u3Z-UL-jKX"/>
                             <constraint firstItem="EJc-Oq-Bby" firstAttribute="leading" secondItem="zVO-1g-WM9" secondAttribute="leading" id="yaA-fM-39S"/>
-                            <constraint firstItem="Ggw-ba-0AZ" firstAttribute="centerY" secondItem="zeW-xh-nro" secondAttribute="centerY" constant="-129.5" id="ypk-rD-ITF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zVO-1g-WM9"/>
                     </view>

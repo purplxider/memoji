@@ -48,7 +48,6 @@ class GameViewController: UIViewController {
             setupAnswerPool()
         }
         setupAnswerBlock()
-        setupQuestion()
         setupMoneyButton()
     }
     
@@ -81,11 +80,12 @@ class GameViewController: UIViewController {
     func setupCurrentQuestion() {
         question = categoryQuestions[questionNumber - 1]
         emoji = question.emoji
-        answerPool = ["다", "단", "만", "싱", "가", "계", "맘", "난", "시", "말", "낙", "세", "셀", "날"] // 수정
         answer = question.answer
         answerLength = question.length
         isFavorite = question.isFavorite
         isSolved = question.isSolved
+        
+        questionLabel.text = emoji
     }
     
     func setupView() {
@@ -97,13 +97,16 @@ class GameViewController: UIViewController {
     }
     
     func nextQuestion() { // 수정
-        // questionNumber = questionNumber + 1
-        UserDefaults.standard.set(questionNumber, forKey: "questionNumber")
+        questionNumber = questionNumber + 1
+        UserDefaults.standard.set(questionNumber, forKey: "questionNumber") // 카테고리 별로 다르게 수정
         navigationItem.title = "#\(questionNumber)"
         moneyButton.setTitle(" \(money)", for: .normal)
         moneyButton.sizeToFit()
         
-        question = categoryQuestions[questionNumber - 1]
+        setupCurrentQuestion()
+        updateAnswerPool()
+        removeAnswerBlock()
+        setupAnswerBlock()
     }
     
     func setupToolBar() {
@@ -132,31 +135,96 @@ class GameViewController: UIViewController {
     
     func setupAnswerBlock() { // 수정 - 답의 길이에 따라 달라져야함
         var button = UIButton()
-        let fixedX = (Int(UIScreen.main.bounds.width) - 44 * answerLength) / (answerLength + 1)
+        var fixedX = (Int(UIScreen.main.bounds.width) - 44 * answerLength) / (answerLength + 1)
         var x = fixedX
-        let y = 323
+        var y = 323
         var count = 0
         
-        for _ in 1...answerLength {
-            button = UIButton(frame: CGRect(x: x, y: y, width: 44, height: 44))
-            button.backgroundColor = UIColor(red: 196/255.0, green: 196/255.0, blue: 196/255.0, alpha: 1.0)
-            button.tag = count + 100
-            button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-            button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-            button.layer.shadowOpacity = 1.0
-            button.layer.shadowRadius = 0.7
-            button.layer.masksToBounds = false
-            button.layer.cornerRadius = 4.0
-            button.showsTouchWhenHighlighted = true
-            button.addTarget(self, action: #selector(deselectAnswer(_:)), for: .touchUpInside)
+        if answerLength <= 6 {
+            for _ in 1...answerLength {
+                button = UIButton(frame: CGRect(x: x, y: y, width: 44, height: 44))
+                button.backgroundColor = UIColor(red: 196/255.0, green: 196/255.0, blue: 196/255.0, alpha: 1.0)
+                button.tag = count + 100
+                button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+                button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+                button.layer.shadowOpacity = 1.0
+                button.layer.shadowRadius = 0.7
+                button.layer.masksToBounds = false
+                button.layer.cornerRadius = 4.0
+                button.showsTouchWhenHighlighted = true
+                button.addTarget(self, action: #selector(deselectAnswer(_:)), for: .touchUpInside)
+                
+                if isSolved {
+                    button.setTitle(answer[count], for: .normal)
+                }
+                
+                self.view.addSubview(button)
+                x = x + fixedX + 44
+                count = count + 1
+            }
+        } else {
+            let firstLineLength = answerLength / 2
+            let firstFixedX = (Int(UIScreen.main.bounds.width) - 44 * firstLineLength) / (firstLineLength + 1)
+            let secondLineLength = answerLength - firstLineLength
+            let secondFixedX = (Int(UIScreen.main.bounds.width) - 44 * secondLineLength) / (secondLineLength + 1)
+            x = firstFixedX
+            y = 283
+            count = 0
             
-            if isSolved {
-                button.setTitle(answer[count], for: .normal)
+            for _ in 1...firstLineLength {
+                button = UIButton(frame: CGRect(x: x, y: y, width: 44, height: 44))
+                button.backgroundColor = UIColor(red: 196/255.0, green: 196/255.0, blue: 196/255.0, alpha: 1.0)
+                button.tag = count + 100
+                button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+                button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+                button.layer.shadowOpacity = 1.0
+                button.layer.shadowRadius = 0.7
+                button.layer.masksToBounds = false
+                button.layer.cornerRadius = 4.0
+                button.showsTouchWhenHighlighted = true
+                button.addTarget(self, action: #selector(deselectAnswer(_:)), for: .touchUpInside)
+                
+                if isSolved {
+                    button.setTitle(answer[count], for: .normal)
+                }
+                
+                self.view.addSubview(button)
+                x = x + firstFixedX + 44
+                count = count + 1
             }
             
-            self.view.addSubview(button)
-            x = x + fixedX + 44
-            count = count + 1
+            x = secondFixedX
+            y = 337
+            
+            for _ in 1...secondLineLength {
+                button = UIButton(frame: CGRect(x: x, y: y, width: 44, height: 44))
+                button.backgroundColor = UIColor(red: 196/255.0, green: 196/255.0, blue: 196/255.0, alpha: 1.0)
+                button.tag = count + 100
+                button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+                button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+                button.layer.shadowOpacity = 1.0
+                button.layer.shadowRadius = 0.7
+                button.layer.masksToBounds = false
+                button.layer.cornerRadius = 4.0
+                button.showsTouchWhenHighlighted = true
+                button.addTarget(self, action: #selector(deselectAnswer(_:)), for: .touchUpInside)
+                
+                if isSolved {
+                    button.setTitle(answer[count], for: .normal)
+                }
+                
+                self.view.addSubview(button)
+                x = x + secondFixedX + 44
+                count = count + 1
+            }
+        }
+    }
+    
+    func removeAnswerBlock() {
+        for i in 100...(100 + answerLength) {
+            if let answerButton = self.view.viewWithTag(i) as? UIButton {
+                answerButton.removeFromSuperview()
+            }
         }
     }
     
@@ -170,7 +238,7 @@ class GameViewController: UIViewController {
             for _ in 0...6 {
                 button = UIButton(frame: CGRect(x: x, y: y, width: 32, height: 42))
                 button.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                button.setTitle(answerPool[count], for: .normal) // 수정
+                //button.setTitle(answerPool[count], for: .normal) // 수정
                 button.setTitleColor(UIColor.black, for: .normal)
                 button.tag = count + 200
                 button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -188,6 +256,9 @@ class GameViewController: UIViewController {
             x = 21
             y = y + 72
         }
+        
+        updateAnswerPool() // 수정
+
     }
     
     func updateAnswerPool() { // 테스트 해보아야 함
@@ -198,28 +269,24 @@ class GameViewController: UIViewController {
         }
         
         var temp = [String]()
-        for _ in 1...(12 - answerLength) {
+        for _ in 1...(14 - answerLength) {
             temp.append(answerPool.randomElement()!)
         }
         answerPool = temp
         answerPool += answer
         answerPool = answerPool.shuffled()
         
-        for i in 200...(200+answerPool.count) {
+        for i in 200...(200+answerPool.count - 1) {
             if let poolButton = self.view.viewWithTag(i) as? UIButton {
                 poolButton.setTitle(answerPool[i - 200], for: .normal)
             }
         }
     }
     
-    func setupQuestion() {
-        questionLabel.text = emoji
-    }
-    
     func checkIfCorrect() {
         if userAnswer == answer {
             questionLabel.text = "정답"
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1200), execute: {
                 self.questionLabel.text = self.emoji
                 self.removeAll()
                 self.money = self.money + 10
