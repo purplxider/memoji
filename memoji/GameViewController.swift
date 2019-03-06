@@ -97,6 +97,14 @@ class GameViewController: UIViewController {
         } else {
             questionLabel.font = UIFont.systemFont(ofSize: 40)
         }
+        
+        if let favoriteButton = self.view.viewWithTag(500) as? UIButton {
+            if isFavorite {
+                favoriteButton.setImage(UIImage(named: "filledHeart"), for: .normal)
+            } else {
+                favoriteButton.setImage(UIImage(named: "unfilledHeart"), for: .normal)
+            }
+        }
     }
     
     func setupView() {
@@ -127,6 +135,7 @@ class GameViewController: UIViewController {
         let share = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil) // 수정
         share.tintColor = UIColor.darkGray
         let favorite = UIBarButtonItem(image: UIImage(named: "unfilledHeart.png"), style: .plain, target: self, action: #selector(toggleFavorite(_:)))
+        favorite.tag = 500
         if isFavorite {
             favorite.image = UIImage(named: "filledHeart.png")
         }

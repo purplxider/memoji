@@ -76,6 +76,7 @@ class FavoriteTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteCell", for: indexPath)
+        var question = Question(emoji: "", length: 0, answer: [])
         
         cell.backgroundColor = .clear
         
@@ -83,13 +84,16 @@ class FavoriteTableViewController: UITableViewController {
         if let categoryValue = favoritesByCategory[categoryKey] {
             let emojis = categoryValue.map({$0.emoji})
             if !emojis.isEmpty {
+                question = categoryValue[indexPath.row]
                 cell.textLabel?.text = emojis[indexPath.row]
             }
         }
         
         var answers = setupAnswer(categoryKey: categoryKey)
 
-        cell.detailTextLabel?.text = answers[indexPath.row].filter({$0 != "."})
+        if question.isSolved {
+            cell.detailTextLabel?.text = answers[indexPath.row]
+        }
 
         return cell
     }
