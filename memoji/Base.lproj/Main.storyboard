@@ -60,7 +60,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="gSK-YI-FL1" kind="show" identifier="startGame" id="vfF-2R-k1y"/>
+                                    <segue destination="3ei-ce-5xq" kind="show" identifier="selectCategory" id="5GJ-Hb-hEA"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -75,10 +75,54 @@
             </objects>
             <point key="canvasLocation" x="1865" y="141"/>
         </scene>
+        <!--Question Table View Controller-->
+        <scene sceneID="Gq0-g3-FmC">
+            <objects>
+                <tableViewController id="3ei-ce-5xq" customClass="QuestionTableViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="C1r-UL-WhH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="questionCell" textLabel="rLn-zx-aLh" detailTextLabel="zZR-Yr-vp3" style="IBUITableViewCellStyleValue1" id="yj3-It-Hy4">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yj3-It-Hy4" id="9P9-h9-V2O">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rLn-zx-aLh">
+                                            <rect key="frame" x="16" y="12" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zZR-Yr-vp3">
+                                            <rect key="frame" x="315" y="12" width="44" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3ei-ce-5xq" id="6Eq-0w-MPI"/>
+                            <outlet property="delegate" destination="3ei-ce-5xq" id="7se-wT-r1M"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RXf-vc-vRp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2724" y="141"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="US5-Ci-nbv">
             <objects>
-                <viewController id="gSK-YI-FL1" customClass="GameViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameView" id="gSK-YI-FL1" customClass="GameViewController" customModule="memoji" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zeW-xh-nro">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -135,7 +179,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ND-Jl-Ufa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2645.5999999999999" y="139.880059970015"/>
+            <point key="canvasLocation" x="3575" y="141"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OsU-qh-DsG">

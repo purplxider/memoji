@@ -89,7 +89,7 @@ class FavoriteTableViewController: UITableViewController {
         
         var answers = setupAnswer(categoryKey: categoryKey)
 
-        cell.detailTextLabel?.text = answers[indexPath.row]
+        cell.detailTextLabel?.text = answers[indexPath.row].filter({$0 != "."})
 
         return cell
     }

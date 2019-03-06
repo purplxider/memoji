@@ -164,14 +164,14 @@ class CategoryTableViewController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
-        if segue.identifier == "startGame" {
+        if segue.identifier == "selectCategory" {
             
             if let cell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as? UITableViewCell {
                 category = (cell.textLabel?.text)!
             }
             
-            var gameVC = segue.destination as! GameViewController
-            gameVC.category = category
+            let questionVC = segue.destination as! QuestionTableViewController
+            questionVC.category = category
         }
         
     }

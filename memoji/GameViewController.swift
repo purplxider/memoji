@@ -20,7 +20,7 @@ class GameViewController: UIViewController {
     var categoryQuestions = [Question]()
     var question = Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"])
     var money = UserDefaults.standard.integer(forKey: "money")
-    var questionNumber = UserDefaults.standard.integer(forKey: "questionNumber")
+    var questionNumber = Int()
     let moneyButton = UIButton(type: .system)
     var isFavorite = false
     var isSolved = false
@@ -78,7 +78,7 @@ class GameViewController: UIViewController {
     }
     
     func setupCurrentQuestion() {
-        question = categoryQuestions[questionNumber - 1]
+        question = categoryQuestions[questionNumber]
         emoji = question.emoji
         answer = question.answer
         answerLength = question.length
@@ -104,13 +104,12 @@ class GameViewController: UIViewController {
         answerView.backgroundColor = UIColor(red: 208/255.0, green: 211/255.0, blue: 217/255.0, alpha: 1.0)
         backgroundImage.image = UIImage(named: "background.png")
         memoImage.image = UIImage(named: "memo.png")
-        navigationItem.title = "#\(questionNumber)" // 수정
+        navigationItem.title = "#\(questionNumber + 1)" // 수정
     }
     
     func nextQuestion() { // 수정
         questionNumber = questionNumber + 1
-        UserDefaults.standard.set(questionNumber, forKey: "questionNumber") // 카테고리 별로 다르게 수정
-        navigationItem.title = "#\(questionNumber)"
+        navigationItem.title = "#\(questionNumber + 1)"
         moneyButton.setTitle(" \(money)", for: .normal)
         moneyButton.sizeToFit()
         
@@ -335,19 +334,25 @@ class GameViewController: UIViewController {
     }
     
     @objc func removeAll() {
-        userAnswer.removeAll()
-        
-        for j in 200...(200+answerPool.count) {
-            if let poolButton = self.view.viewWithTag(j) as? UIButton {
-                poolButton.isEnabled = true
-                poolButton.isHidden = false
+        if !isSolved {
+            userAnswer.removeAll()
+            
+            for _ in 1...answerLength {
+                userAnswer.append("")
             }
-        }
-        
-        for i in 100...(100+answerLength) {
-            if let answerButton = self.view.viewWithTag(i) as? UIButton {
-                answerButton.setTitle(" ", for: .normal)
-                hiddenButtonTag.removeValue(forKey: answerButton.tag)
+            
+            for j in 200...(200+answerPool.count) {
+                if let poolButton = self.view.viewWithTag(j) as? UIButton {
+                    poolButton.isEnabled = true
+                    poolButton.isHidden = false
+                }
+            }
+            
+            for i in 100...(100+answerLength) {
+                if let answerButton = self.view.viewWithTag(i) as? UIButton {
+                    answerButton.setTitle(" ", for: .normal)
+                    hiddenButtonTag.removeValue(forKey: answerButton.tag)
+                }
             }
         }
     }
@@ -450,7 +455,7 @@ class GameViewController: UIViewController {
     func saveFavorite() {
         categoryQuestions = categoryQuestions.filter({$0 != question})
         question.isFavorite = !question.isFavorite
-        categoryQuestions.insert(question, at: questionNumber - 1)
+        categoryQuestions.insert(question, at: questionNumber)
         
         let data = NSKeyedArchiver.archivedData(withRootObject: categoryQuestions)
         
@@ -468,7 +473,7 @@ class GameViewController: UIViewController {
     func saveSolved() {
         categoryQuestions = categoryQuestions.filter({$0 != question})
         question.isSolved = true
-        categoryQuestions.insert(question, at: questionNumber - 1)
+        categoryQuestions.insert(question, at: questionNumber)
         
         let data = NSKeyedArchiver.archivedData(withRootObject: categoryQuestions)
         

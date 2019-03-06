@@ -19,9 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UserDefaults.standard.object(forKey: "money") == nil {
             UserDefaults.standard.set(0, forKey: "money")
         }
-        if UserDefaults.standard.object(forKey: "questionNumber") == nil {
-            UserDefaults.standard.set(1, forKey: "questionNumber")
-        }
         if UserDefaults.standard.object(forKey: "kpop") == nil {
             var questions = [Question]()
             questions.append(Question(emoji: "🔁🤝🌏", length: 6, answer: ["다", "시", "만", "난", "세", "계"]))
