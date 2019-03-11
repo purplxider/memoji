@@ -93,6 +93,8 @@ class FavoriteTableViewController: UITableViewController {
 
         if question.isSolved {
             cell.detailTextLabel?.text = answers[indexPath.row]
+        } else {
+            cell.detailTextLabel?.text = ""
         }
 
         return cell
